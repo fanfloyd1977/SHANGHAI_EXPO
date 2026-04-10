@@ -616,7 +616,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <div class="cn-deco-line bot"></div>
     </div>
     <div class="cn-seal">纳<br>米
-      <div class="cn-seal-qr"><img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://fanfloyd1977.github.io/SHANGHAI_EXPO/index.html&color=18202e&bgcolor=f5f0e8" width="120" height="120" style="border-radius:4px;display:block"><span>Dark Version</span></div>
+      <div class="cn-seal-qr"><img src="horse_qr.png" width="120" height="120" style="display:block"><span>Dark Version</span></div>
     </div>
     <div class="cn-sub">INNOVATION · SCIENCE · TECHNOLOGY</div>
   </div>
@@ -837,7 +837,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
             <div class="rgb-seg" style="background:rgb(204,204,204)"></div>
             <div class="rgb-seg" style="background:rgb(255,255,255);border:1px solid #ddd"></div>
           </div>
-          <div class="rgb-annot"><span>0 μg/cm² (Min)</span><span>255 μg/cm² (Max)</span></div>
+          <div class="rgb-annot"><span>Max (μg/cm²)</span><span>Min (μg/cm²)</span></div>
         </div>
       </div>
       <div class="struct-info reveal d2">
@@ -1091,6 +1091,10 @@ document.querySelectorAll('.layer-stack').forEach(s => layIO.observe(s));
   const brand = document.querySelector('.hero-brand');
   const vidWrap = document.querySelector('.hero-vid-wrap');
   if(!brand || !vidWrap) return;
+  // Show on page load, auto-hide after 4s
+  vidWrap.classList.add('visible');
+  setTimeout(() => { if(!brand.matches(':hover')) vidWrap.classList.remove('visible'); }, 4000);
+  // Hover continues to work normally
   brand.addEventListener('mouseenter', () => vidWrap.classList.add('visible'));
   brand.addEventListener('mouseleave', () => vidWrap.classList.remove('visible'));
 })();
