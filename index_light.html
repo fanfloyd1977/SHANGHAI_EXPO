@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACTIV-In Dot Technology · Shanghai 2026 · Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&family=Lato:wght@300;400;700&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#f5efe6;       /* hero bg: warm cream */
+  --navy:#0d2145;      /* dark text + headers */
+  --red:#c41230;
+  --gold:#b8922a;      /* darker gold for light bg */
+  --gold2:#9a7a22;
+  --teal:#1a6a6a;
+  --white:#ffffff;
+  --offwhite:#f8f4ee;
+  --section-alt:#f0ece5;
+  --gray:#778899;
+  --text:#1e2a3a;
+  --text2:#445566;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:#fff;color:var(--text);overflow-x:hidden}
+
+/* ── NAVBAR ── */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 48px;
+  background:rgba(245,239,230,0);
+  transition:background .4s,padding .4s,box-shadow .4s;
+}
+#navbar.scrolled{background:rgba(245,239,230,.97);padding:10px 48px;box-shadow:0 2px 20px rgba(0,0,0,.1);border-bottom:1px solid rgba(196,18,48,.15)}
+.nav-brand{font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;color:var(--red);letter-spacing:.1em;opacity:0;transition:opacity .4s}
+#navbar.scrolled .nav-brand{opacity:1}
+.nav-dots{display:flex;gap:10px}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(13,33,69,.2);cursor:pointer;transition:background .3s,transform .3s}
+.nav-dot.active,.nav-dot:hover{background:var(--red);transform:scale(1.4)}
+
+/* ── HERO ── */
+#hero{
+  position:relative;min-height:100vh;
+  background:var(--ink);
+  display:grid;grid-template-columns:1fr 380px;
+  overflow:hidden;cursor:crosshair;
+}
+@media(max-width:900px){#hero{grid-template-columns:1fr}}
+
+/* Warm ink wash overlay */
+.ink-wash{
+  position:absolute;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 90% 70% at 20% 50%, rgba(240,230,210,.5) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 85% 20%, rgba(196,18,48,.03) 0%, transparent 60%);
+}
+/* Subtle Chinese paper texture lines */
+.paper-lines{
+  position:absolute;inset:0;z-index:0;
+  background-image:repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 38px,
+    rgba(184,146,42,.05) 38px,
+    rgba(184,146,42,.05) 39px
+  );
+}
+/* Full-hero background canvas */
+#hero-canvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  display:block;
+  pointer-events:none;
+  z-index:1;
+}
+
+.hero-left{
+  position:relative;z-index:4;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:70px 60px 36px 72px;
+}
+@media(max-width:900px){.hero-left{padding:70px 32px 36px}}
+
+.event-top{
+  display:flex;flex-direction:column;gap:6px;margin-bottom:22px;
+  opacity:0;animation:fadeUp .9s ease forwards .2s;
+}
+.event-year{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;letter-spacing:.25em;color:var(--red);text-transform:uppercase;margin-bottom:4px}
+.event-sep{width:40px;height:1px;background:rgba(184,146,42,.5);display:none}
+.event-cn{font-family:'Noto Serif SC',serif;font-size:14px;font-weight:700;color:var(--navy);letter-spacing:.06em;line-height:1.4}
+.event-en{font-family:'Lato',sans-serif;font-size:12px;font-weight:400;color:var(--text2);letter-spacing:.02em;line-height:1.4}
+
+.hero-paper{
+  font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.1vw,13px);
+  font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(30,42,58,.45);line-height:1.6;max-width:480px;margin-bottom:14px;
+  opacity:0;animation:fadeUp .9s ease forwards .45s;
+}
+
+.hero-brand{
+  font-family:'Montserrat',sans-serif;
+  font-size:clamp(40px,5.5vw,64px);font-weight:900;letter-spacing:.03em;line-height:1.05;
+  color:var(--navy);margin-bottom:6px;
+  opacity:0;animation:fadeUp .9s ease forwards .65s;
+}
+.hero-brand .red{color:var(--red)}
+.hero-brand .gold{color:var(--gold)}
+
+.brand-line{
+  width:100%;height:3px;margin-bottom:16px;
+  background:linear-gradient(90deg,var(--red),var(--gold),var(--red));
+  background-size:200% 100%;
+  animation:shimmer 3s linear infinite, growLine .8s ease forwards .9s;
+  transform:scaleX(0);transform-origin:left;
+}
+@keyframes growLine{to{transform:scaleX(1)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.hero-tagline{
+  font-size:clamp(13px,1.4vw,15px);font-weight:400;
+  color:var(--text2);line-height:1.7;max-width:440px;margin-bottom:22px;
+  opacity:0;animation:fadeUp .9s ease forwards .85s;
+}
+.hero-tagline em{color:var(--red);font-style:normal;font-weight:600}
+
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid rgba(184,146,42,.35);max-width:480px;
+  background:rgba(255,255,255,.5);
+  opacity:0;animation:fadeUp .9s ease forwards 1.1s;
+}
+.hero-stat{padding:10px 12px;text-align:center;border-right:1px solid rgba(184,146,42,.2)}
+.hero-stat:last-child{border-right:none}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:clamp(20px,2.5vw,28px);font-weight:900;color:var(--red);display:block;line-height:1}
+.stat-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--text2);text-transform:uppercase;margin-top:4px;display:block}
+
+.hero-date{
+  margin-top:16px;padding-top:14px;border-top:1px solid rgba(13,33,69,.1);
+  font-size:12px;color:var(--text2);letter-spacing:.06em;
+  opacity:0;animation:fadeUp .9s ease forwards 1.3s;
+}
+.hero-date strong{color:var(--navy)}
+
+/* Right calligraphy panel */
+.hero-right{
+  position:relative;z-index:4;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:70px 32px 40px;
+  background:rgba(255,255,255,.18);
+}
+@media(max-width:900px){.hero-right{display:none}}
+
+.cn-chars{display:flex;flex-direction:column;align-items:center;position:relative}
+.cn-char{
+  font-family:'Noto Serif SC',serif;
+  font-size:clamp(72px,8.5vw,118px);font-weight:900;line-height:1.0;letter-spacing:-.02em;
+  color:var(--navy);
+  filter:drop-shadow(2px 4px 8px rgba(13,33,69,.15));
+  opacity:0;
+}
+.cn-char:nth-child(1){animation:charDrop .7s cubic-bezier(.22,.61,.36,1) forwards .4s}
+.cn-char:nth-child(2){animation:charDrop .7s cubic-bezier(.22,.61,.36,1) forwards .65s}
+.cn-char:nth-child(3){animation:charDrop .7s cubic-bezier(.22,.61,.36,1) forwards .9s}
+.cn-char:nth-child(4){animation:charDrop .7s cubic-bezier(.22,.61,.36,1) forwards 1.15s}
+@keyframes charDrop{
+  from{opacity:0;transform:scale(.7);filter:blur(10px) drop-shadow(2px 4px 8px rgba(13,33,69,.15))}
+  to{opacity:1;transform:scale(1);filter:blur(0) drop-shadow(2px 4px 8px rgba(13,33,69,.15))}
+}
+.cn-deco-line{width:2px;background:linear-gradient(to bottom,transparent,rgba(196,18,48,.6),rgba(196,18,48,.4),transparent);position:absolute;opacity:0;animation:fadeIn .8s ease forwards 1.8s}
+.cn-deco-line.top{height:80px;top:-90px}
+.cn-deco-line.bot{height:170px;bottom:-70px}
+.cn-sub{margin-top:20px;text-align:center;font-family:'Noto Serif SC',serif;font-size:12px;color:var(--text2);letter-spacing:.15em;opacity:0;animation:fadeIn .8s ease forwards 1.6s}
+.cn-seal{
+  margin-top:28px;width:56px;height:56px;border:2.5px solid var(--red);border-radius:4px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Noto Serif SC',serif;font-size:13px;font-weight:700;color:var(--red);
+  letter-spacing:.04em;line-height:1.3;
+  opacity:0;animation:fadeIn .6s ease forwards 1.9s;
+}
+
+.hero-scroll{position:absolute;bottom:30px;left:72px;z-index:5;display:flex;align-items:center;gap:12px;opacity:0;animation:fadeIn 1s ease forwards 2s}
+.hero-scroll span{font-size:10px;letter-spacing:.2em;color:var(--text2);text-transform:uppercase}
+.scroll-line{width:40px;height:1px;background:linear-gradient(to right,var(--red),transparent);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%,100%{opacity:.4;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.15)}}
+
+/* ── SECTIONS ── */
+.section-wrap{padding:90px 72px}
+.section-wrap.alt{background:var(--section-alt)}
+.section-wrap.dark{background:var(--navy)}
+.section-inner{max-width:1060px;margin:0 auto}
+
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';display:block;width:28px;height:2px;background:var(--red);flex-shrink:0}
+.section-wrap.dark .eyebrow{color:var(--gold)}.section-wrap.dark .eyebrow::before{background:var(--gold)}
+
+.section-title{font-family:'Montserrat',sans-serif;font-size:clamp(26px,3.5vw,38px);font-weight:800;color:var(--navy);margin-bottom:12px;line-height:1.2}
+.section-wrap.dark .section-title{color:#fff}
+.section-lead{font-size:15px;color:var(--text2);line-height:1.8;max-width:600px;margin-bottom:50px}
+.section-wrap.dark .section-lead{color:rgba(255,255,255,.55)}
+
+.gold-bar{width:52px;height:4px;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;margin-bottom:44px}
+
+.reveal{opacity:0;transform:scale(.97);transition:opacity .75s ease,transform .75s ease}
+.reveal.on{opacity:1;transform:scale(1)}
+.d1{transition-delay:.1s}.d2{transition-delay:.22s}.d3{transition-delay:.34s}
+.d4{transition-delay:.46s}.d5{transition-delay:.58s}.d6{transition-delay:.7s}
+
+/* ── ABOUT ── */
+#about .grid{display:grid;grid-template-columns:400px 1fr;gap:70px;align-items:center}
+@media(max-width:900px){#about .grid{grid-template-columns:1fr}}
+.circle-wrap{width:380px;height:380px;margin:0 auto;position:relative}
+#circle-svg{width:100%;height:100%;overflow:visible}
+.about-body p{font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:18px}
+.about-quote{border-left:3px solid var(--gold);padding:14px 22px;background:linear-gradient(90deg,rgba(184,146,42,.08),transparent);font-style:italic;font-size:14px;color:var(--navy);line-height:1.7}
+
+
+/* ── PROCESS ── */
+#process.section-wrap{padding:44px 72px}
+#process .gold-bar{margin-bottom:22px}
+#process .process-layout{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:center}
+@media(max-width:900px){#process .process-layout{grid-template-columns:1fr}}
+#process .steps{display:flex;flex-direction:column;position:static}
+#process .connector{display:none}
+#process .step{display:flex;align-items:flex-start;gap:14px;text-align:left;padding:16px 18px;background:#fff;border:1px solid #dde4ee;border-bottom:none;transition:box-shadow .3s,transform .3s}
+#process .step:last-child{border-bottom:1px solid #dde4ee}
+#process .step+.step{border-left:1px solid #dde4ee}
+#process .step:hover{box-shadow:0 6px 24px rgba(13,33,69,.09);transform:translateY(-2px)}
+#process .step-num{margin:0;flex-shrink:0;width:40px;height:40px;border-radius:50%;background:var(--navy);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:16px;font-weight:900;color:var(--gold)}
+#process .step-icon{font-size:20px;margin-bottom:6px}
+#process .step-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px}
+#process .step-desc{font-size:12px;color:var(--text2);line-height:1.65}
+
+/* ── PROCESS VIDEO ── */
+.process-vid-wrap{text-align:center}
+.process-vid-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+.process-vid-label::before,.process-vid-label::after{content:'';display:inline-block;width:28px;height:1.5px;background:var(--gold);vertical-align:middle;margin:0 8px}
+.process-vid-frame{display:inline-block;border-radius:12px;overflow:hidden;box-shadow:0 8px 40px rgba(13,33,69,.18),0 0 0 1px #dde4ee;width:100%}
+.process-vid-frame video{display:block;width:100%;height:auto}
+.process-vid-caption{margin-top:10px;font-size:11.5px;color:var(--text2);letter-spacing:.03em}
+
+/* ── ADVANTAGES ── */
+#advantages .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){#advantages .grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){#advantages .grid{grid-template-columns:1fr}}
+.adv{background:#fff;border:1px solid #dde4ee;border-top:3px solid transparent;padding:30px 26px;transition:box-shadow .3s,border-color .3s,transform .3s}
+.adv:hover{box-shadow:0 8px 36px rgba(13,33,69,.1);border-top-color:var(--red);transform:translateY(-4px)}
+.adv-icon{font-size:32px;margin-bottom:14px}
+.adv-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px}
+.adv-body{font-size:13px;color:var(--text2);line-height:1.65}
+.adv-num{display:inline-block;margin-top:12px;background:var(--navy);color:var(--gold);font-family:'Montserrat',sans-serif;font-size:22px;font-weight:900;padding:4px 14px;border-radius:3px}
+
+/* ── AI CRITERIA ── */
+#criteria .grid{display:grid;grid-template-columns:1fr 1.3fr;gap:60px;align-items:start}
+@media(max-width:768px){#criteria .grid{grid-template-columns:1fr}}
+.crit-box{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.7);border:1px solid rgba(184,146,42,.25);border-radius:3px;padding:16px 20px;margin-bottom:14px}
+.crit-icon{font-size:22px;flex-shrink:0}
+.crit-text{font-size:14px;color:rgba(255,255,255,.85);line-height:1.5}
+.crit-text strong{color:var(--gold)}
+
+.ai-table{width:100%;border-collapse:collapse}
+.ai-table th{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);padding:10px 14px;border-bottom:1px solid rgba(184,146,42,.35);text-align:left}
+.ai-table td{padding:10px 14px;font-size:13px;color:rgba(255,255,255,.85);border-bottom:1px solid rgba(255,255,255,.06)}
+.ai-table tr:last-child td{border-bottom:none}
+.logp-wrap{display:flex;align-items:center;gap:8px}
+.logp-bg{flex:1;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+.logp-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform 1.1s cubic-bezier(.4,0,.2,1)}
+.logp-fill.on{transform:scaleX(1)}
+.logp-val{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap}
+.exc-row td{opacity:.35}.exc-row .logp-fill{background:#888}
+.ok{color:#3cb06a}.no{color:#e05050}
+
+/* ── PRODUCTS ── */
+#products .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:768px){#products .grid{grid-template-columns:1fr}}
+.prod{border:1px solid #dde4ee;background:#fff;overflow:hidden;transition:box-shadow .3s,transform .3s}
+.prod:hover{box-shadow:0 14px 48px rgba(13,33,69,.12);transform:translateY(-4px)}
+.prod-head{padding:0;text-align:center;position:relative;overflow:hidden;min-height:200px}
+.prod-img{width:100%;height:200px;object-fit:cover;display:block}
+.prod-head-overlay{position:absolute;bottom:0;left:0;right:0;padding:48px 20px 16px;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.prod-name{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:#fff;letter-spacing:.04em}
+.prod-ai{font-size:11px;color:rgba(255,255,255,.65);letter-spacing:.06em;margin-top:3px}
+.prod-body{padding:22px 26px}
+.prod-dose{display:flex;align-items:baseline;gap:6px;margin-bottom:14px}
+.dose-n{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:900;color:var(--navy)}
+.dose-u{font-size:13px;color:var(--gray);line-height:1.3}
+.prod-tag{display:inline-block;background:var(--section-alt);color:var(--navy);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:10px;margin-bottom:14px}
+.prod-specs{font-size:12.5px;color:var(--text2);line-height:1.85}
+.prod-spec::before{content:'· ';color:var(--gold);font-weight:bold}
+
+/* ── STRUCTURE ── */
+#structure .grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@media(max-width:768px){#structure .grid{grid-template-columns:1fr}}
+.layer-stack{max-width:340px;margin:0 auto}
+.layer{padding:15px 28px;color:#fff;text-align:center;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;clip-path:polygon(2% 0%,98% 0%,100% 100%,0% 100%);margin-bottom:5px;opacity:0;transition:opacity .6s ease}
+.layer.on{opacity:1}
+.layer.l1{background:#162f6e;transition-delay:.1s}.layer.l2{background:#1060a0;transition-delay:.3s}
+.layer.l3{background:#148bb8;transition-delay:.5s}.layer.l4{background:#12b0ce;color:#003344;transition-delay:.7s}
+.rgb-block{margin-top:32px}
+.rgb-label{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px}
+.rgb-bar{display:flex;height:28px;border-radius:3px;overflow:hidden;border:1px solid #dde4ee}
+.rgb-seg{flex:1}
+.rgb-annot{display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-top:5px}
+.struct-info .blk{margin-bottom:28px}
+.blk-title{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.06em;text-transform:uppercase;padding-bottom:8px;border-bottom:1px solid #dde4ee;margin-bottom:10px}
+.info-ul{list-style:none}
+.info-ul li{font-size:13.5px;color:var(--text2);padding:4px 0;display:flex;gap:10px;align-items:flex-start;line-height:1.55}
+.info-ul li::before{content:'◆';color:var(--gold);font-size:8px;margin-top:5px;flex-shrink:0}
+
+/* ── FOOTER ── */
+#footer-section{background:var(--navy);padding:80px 72px 50px}
+.footer-grid{max-width:1060px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:52px;margin-bottom:48px}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr}}
+.footer-brand-name{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:900;color:var(--gold);letter-spacing:.07em;margin-bottom:4px}
+.footer-brand-sub{font-size:10px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;margin-bottom:16px}
+.footer-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.7}
+.f-col-title{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding-bottom:10px;border-bottom:1px solid rgba(184,146,42,.2);margin-bottom:14px}
+.f-contact{margin-bottom:10px;font-size:13px;color:rgba(255,255,255,.55)}
+.f-contact strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.8);margin-bottom:2px}
+.f-patent{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.f-patent:last-child{border-bottom:none}
+.f-patent .pt{font-size:12px;color:rgba(255,255,255,.5);font-style:italic;line-height:1.5}
+.f-patent .pn{font-size:10px;color:var(--gold);margin-top:3px}
+.footer-bottom{max-width:1060px;margin:0 auto;border-top:1px solid rgba(255,255,255,.07);padding-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-slogan{font-size:14px;font-style:italic;color:rgba(255,255,255,.4);max-width:580px;line-height:1.6}
+.footer-slogan em{color:rgba(240,208,112,.8);font-style:normal}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.2)}
+
+/* Version switcher */
+.version-btn{
+  position:fixed;bottom:10px;right:24px;z-index:998;
+  background:var(--navy);color:var(--gold);
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:10px 18px;border:1.5px solid var(--gold);border-radius:3px;
+  text-decoration:none;cursor:pointer;
+  transition:background .3s,color .3s;
+}
+.version-btn:hover{background:var(--gold);color:var(--navy)}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- Version switcher -->
+<a class="version-btn" href="index.html">☾ Dark Version</a>
+
+<nav id="navbar">
+  <span class="nav-brand">ACTIV-In · Shanghai 2026</span>
+  <div class="nav-dots">
+    <div class="nav-dot active" data-sec="hero"></div>
+    <div class="nav-dot" data-sec="about"></div>
+    <div class="nav-dot" data-sec="process"></div>
+    <div class="nav-dot" data-sec="advantages"></div>
+    <div class="nav-dot" data-sec="criteria"></div>
+    <div class="nav-dot" data-sec="products"></div>
+    <div class="nav-dot" data-sec="structure"></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="ink-wash"></div>
+  <div class="paper-lines"></div>
+
+  <!-- LEFT: content -->
+  <div class="hero-left">
+    <div class="event-top">
+      <span class="event-year">Shanghai · 2026</span>
+      <span class="event-cn">第九届中国（上海）国际发明创新展</span>
+      <span class="event-en">The 9th China (Shanghai) International Invention and Innovation Exhibition</span>
+    </div>
+    <p class="hero-paper">Preparation of Microencapsulated AIs for Fabrication of a<br>Topical Patch Using Laser Printing Technology</p>
+    <h1 class="hero-brand"><span class="red">ACTIV</span><span style="color:rgba(13,33,69,.35)">-In</span><br><span class="gold">Dot</span> Tech.</h1>
+    <div class="brand-line"></div>
+    <p class="hero-tagline">Precision microencapsulated <em>active ingredients</em> &amp; topical patch<br>fabrication powered by <em>laser printing technology</em></p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="stat-num" data-count="90" data-suffix="%+">0</span><span class="stat-lbl">Accuracy</span></div>
+      <div class="hero-stat"><span class="stat-num" data-count="600" data-suffix="">0</span><span class="stat-lbl">DPI</span></div>
+      <div class="hero-stat"><span class="stat-num" data-count="30" data-suffix="ms">0</span><span class="stat-lbl">Per Sheet</span></div>
+      <div class="hero-stat"><span class="stat-num" data-count="3" data-suffix="">0</span><span class="stat-lbl">Patents</span></div>
+    </div>
+    <div class="hero-date"><strong>June 10–14, 2026</strong> &nbsp;·&nbsp; Shanghai World Expo Exhibition and Convention Center</div>
+    <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+  </div>
+
+  <!-- RIGHT: Chinese calligraphy -->
+  <div class="hero-right">
+    <div class="cn-chars">
+      <div class="cn-deco-line top"></div>
+      <span class="cn-char">创</span>
+      <span class="cn-char">新</span>
+      <span class="cn-char">科</span>
+      <span class="cn-char">技</span>
+      <div class="cn-deco-line bot"></div>
+    </div>
+    <div class="cn-sub">INNOVATION · SCIENCE · TECHNOLOGY</div>
+    <div class="cn-seal">纳<br>米</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section-wrap">
+  <div class="section-inner">
+    <div class="grid">
+      <div class="circle-wrap reveal">
+        <svg id="circle-svg" viewBox="-10 -10 220 220">
+          <defs>
+            <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c41230"/>
+              <stop offset="100%" stop-color="#b8922a"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <circle cx="100" cy="100" r="98" fill="none" stroke="#dde4ee" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="98" fill="none" stroke="url(#g1)" stroke-width="4"
+            stroke-dasharray="616" stroke-dashoffset="616" class="arc-draw"
+            style="transform:rotate(-90deg);transform-origin:100px 100px;transition:stroke-dashoffset 2.2s ease .3s"/>
+          <circle cx="100" cy="100" r="76" fill="none" stroke="#e2e8f4" stroke-width="1"/>
+          <circle cx="100" cy="100" r="54" fill="#0d2145"/>
+          <circle cx="100" cy="100" r="54" fill="none" stroke="rgba(184,146,42,.5)" stroke-width="1.5"/>
+          <text x="100" y="92" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="9.5" font-weight="900" fill="#b8922a" letter-spacing="1.5">ACTIV-In</text>
+          <text x="100" y="108" text-anchor="middle" font-family="Montserrat,sans-serif" font-size="7" font-weight="600" fill="rgba(255,255,255,.65)" letter-spacing="2.5">DOT TECH</text>
+          <line x1="100" y1="100" x2="176" y2="100"   stroke="#b8922a" stroke-width="0.8" opacity="0" class="spoke"/>
+          <line x1="100" y1="100" x2="138" y2="165.8" stroke="#b8922a" stroke-width="0.8" opacity="0" class="spoke"/>
+          <line x1="100" y1="100" x2="62"  y2="165.8" stroke="#b8922a" stroke-width="0.8" opacity="0" class="spoke"/>
+          <line x1="100" y1="100" x2="24"  y2="100"   stroke="#b8922a" stroke-width="0.8" opacity="0" class="spoke"/>
+          <line x1="100" y1="100" x2="62"  y2="34.2"  stroke="#b8922a" stroke-width="0.8" opacity="0" class="spoke"/>
+          <line x1="100" y1="100" x2="138" y2="34.2"  stroke="#b8922a" stroke-width="0.8" opacity="0" class="spoke"/>
+          <circle cx="176" cy="100"   r="19" fill="#c41230" opacity="0" class="node" filter="url(#glow)"/>
+          <circle cx="138" cy="165.8" r="19" fill="#0d2145" stroke="#b8922a" stroke-width="2" opacity="0" class="node"/>
+          <circle cx="62"  cy="165.8" r="19" fill="#0d2145" stroke="#b8922a" stroke-width="2" opacity="0" class="node"/>
+          <circle cx="24"  cy="100"   r="19" fill="#c41230" opacity="0" class="node" filter="url(#glow)"/>
+          <circle cx="62"  cy="34.2"  r="19" fill="#0d2145" stroke="#b8922a" stroke-width="2" opacity="0" class="node"/>
+          <circle cx="138" cy="34.2"  r="19" fill="#0d2145" stroke="#b8922a" stroke-width="2" opacity="0" class="node"/>
+          <text x="176" y="97"  text-anchor="middle" font-size="12" fill="#fff" opacity="0" class="nlabel">🎯</text>
+          <text x="176" y="110" text-anchor="middle" font-size="6"  fill="#fff" opacity="0" class="nlabel" font-weight="700">DOSE</text>
+          <text x="138" y="163" text-anchor="middle" font-size="12" fill="#fff" opacity="0" class="nlabel">⚡</text>
+          <text x="138" y="176" text-anchor="middle" font-size="6"  fill="#b8922a" opacity="0" class="nlabel" font-weight="700">SPEED</text>
+          <text x="62"  y="163" text-anchor="middle" font-size="12" fill="#fff" opacity="0" class="nlabel">🔬</text>
+          <text x="62"  y="176" text-anchor="middle" font-size="6"  fill="#b8922a" opacity="0" class="nlabel" font-weight="700">600DPI</text>
+          <text x="24"  y="97"  text-anchor="middle" font-size="12" fill="#fff" opacity="0" class="nlabel">🩹</text>
+          <text x="24"  y="110" text-anchor="middle" font-size="6"  fill="#fff" opacity="0" class="nlabel" font-weight="700">PATCH</text>
+          <text x="62"  y="31"  text-anchor="middle" font-size="12" fill="#fff" opacity="0" class="nlabel">🧬</text>
+          <text x="62"  y="44"  text-anchor="middle" font-size="6"  fill="#b8922a" opacity="0" class="nlabel" font-weight="700">AI</text>
+          <text x="138" y="31"  text-anchor="middle" font-size="12" fill="#fff" opacity="0" class="nlabel">🌿</text>
+          <text x="138" y="44"  text-anchor="middle" font-size="6"  fill="#b8922a" opacity="0" class="nlabel" font-weight="700">NATURAL</text>
+        </svg>
+      </div>
+      <div class="about-body">
+        <p class="eyebrow reveal">Our Technology</p>
+        <h2 class="section-title reveal">ACTIV-In Dot Technology</h2>
+        <div class="gold-bar reveal"></div>
+        <p class="reveal">A novel platform for the preparation of <strong>microencapsulated active ingredients (AIs)</strong> and the fabrication of topical patches using laser printing technology. Enables precise AI dosage customization — greater than 90% accuracy — at 600 DPI resolution, with high-speed fabrication of 30 ms per sheet.</p>
+        <p class="reveal" style="margin-top:14px">Customizable patch shape, size (up to A4), backing substrate type and thickness. Can integrate directly with skin analyzers for truly personalized topical patch solutions.</p>
+        <blockquote class="about-quote reveal" style="margin-top:20px">"Selected bioactive compounds sourced from Thailand — curcumin, aloin, and oxyresveratrol — were successfully encapsulated and fabricated into patch prototypes with strong B2B commercialization potential."</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section-wrap alt">
+  <div class="section-inner">
+    <p class="eyebrow reveal">How It Works</p>
+    <h2 class="section-title reveal">Fabrication in 3 Steps</h2>
+    <div class="gold-bar reveal"></div>
+    <div class="process-layout">
+      <div class="steps">
+        <div class="step reveal d1">
+          <div class="step-num">1</div>
+          <div class="step-body"><div class="step-icon">⚗️</div><div class="step-title">Microencapsulated AI Toner</div><div class="step-desc">Active ingredients are microencapsulated into a printable powder — functioning as a precision toner for the laser printing system.</div></div>
+        </div>
+        <div class="step reveal d3">
+          <div class="step-num">2</div>
+          <div class="step-body"><div class="step-icon">🔴</div><div class="step-title">OPC + Laser → Latent Image</div><div class="step-desc">Laser activates the OPC drum to create a precise latent image. RGB grayscale directly encodes AI dosage (0–255 μg/cm²).</div></div>
+        </div>
+        <div class="step reveal d5">
+          <div class="step-num">3</div>
+          <div class="step-body"><div class="step-icon">🩹</div><div class="step-title">Single Layer Deposition</div><div class="step-desc">Microencapsulated AIs fuse to the backing substrate at 600 DPI precision — a finished topical patch in just 30 ms/sheet.</div></div>
+        </div>
+      </div>
+      <div class="process-vid-wrap reveal">
+        <p class="process-vid-label">See It in Action</p>
+        <div class="process-vid-frame">
+          <video autoplay muted loop playsinline>
+            <source src="PixVerse_V6_Image_Text_360P_A_sleek_product_an_3.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="process-vid-caption">ACTIV-In Dot Technology — from botanical compound to precision topical patch</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section id="advantages" class="section-wrap">
+  <div class="section-inner">
+    <p class="eyebrow reveal">Why Choose Us</p>
+    <h2 class="section-title reveal">Advantages of ACTIV-In Dot Technology</h2>
+    <div class="gold-bar reveal"></div>
+    <div class="grid">
+      <div class="adv reveal d1"><div class="adv-icon">🎯</div><div class="adv-title">Precision Dosing</div><div class="adv-body">Precise AI dosage customization with greater than 90% dosing accuracy.</div><div class="adv-num" data-count="90" data-suffix="%+">0</div></div>
+      <div class="adv reveal d2"><div class="adv-icon">🖨️</div><div class="adv-title">High Resolution</div><div class="adv-body">Patterning at 600 DPI resolution for precise spatial distribution.</div><div class="adv-num" data-count="600" data-suffix=" DPI">0</div></div>
+      <div class="adv reveal d3"><div class="adv-icon">⚡</div><div class="adv-title">High-Speed Fabrication</div><div class="adv-body">Blazing-fast production at just 30 milliseconds per sheet.</div><div class="adv-num" data-count="30" data-suffix=" ms">0</div></div>
+      <div class="adv reveal d4"><div class="adv-icon">🩺</div><div class="adv-title">Skin Analyzer Integration</div><div class="adv-body">Compatible with skin analyzers for personalized topical treatments.</div></div>
+      <div class="adv reveal d5"><div class="adv-icon">🏭</div><div class="adv-title">Startup-Friendly</div><div class="adv-body">Low MOQ: 1,000 patches for $300 — accessible for startups and clinics.</div><div class="adv-num" style="font-size:14px">$0.30 / patch</div></div>
+      <div class="adv reveal d6"><div class="adv-icon">🌿</div><div class="adv-title">Safety Certified</div><div class="adv-body">Follows Herbal Product Act B.E. 2562. Cosmetic-grade, non-irritating.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI CRITERIA -->
+<section id="criteria" class="section-wrap dark">
+  <div class="section-inner">
+    <p class="eyebrow reveal">Active Ingredients</p>
+    <h2 class="section-title reveal">Key Criteria for Selecting AIs</h2>
+    <div class="gold-bar reveal"></div>
+    <div class="grid">
+      <div class="crit-boxes">
+        <div class="crit-box reveal d1"><div class="crit-icon">🌡️</div><div class="crit-text"><strong>Solid at Room Temperature</strong><br>Ensures stability during microencapsulation and the printing process.</div></div>
+        <div class="crit-box reveal d2"><div class="crit-icon">⚖️</div><div class="crit-text"><strong>Molecular Weight ≤ 500 Da</strong><br>Small molecules penetrate skin layers effectively.</div></div>
+        <div class="crit-box reveal d3"><div class="crit-icon">🧪</div><div class="crit-text"><strong>LogP Value 1 – 3</strong><br>Optimal lipophilicity for percutaneous absorption.</div></div>
+      </div>
+      <div>
+        <table class="ai-table reveal">
+          <thead><tr><th>Active Ingredient</th><th>LogP</th><th>Range</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Curcumin</td><td>3.0</td><td><div class="logp-wrap"><div class="logp-bg"><div class="logp-fill" style="width:100%"></div></div><span class="logp-val">3.0</span></div></td><td><span class="ok">✔</span></td></tr>
+            <tr><td>Menthane carboxamidoethyl acetate</td><td>2.9</td><td><div class="logp-wrap"><div class="logp-bg"><div class="logp-fill" style="width:97%"></div></div><span class="logp-val">2.9</span></div></td><td><span class="ok">✔</span></td></tr>
+            <tr><td>Mitragynine</td><td>1.73</td><td><div class="logp-wrap"><div class="logp-bg"><div class="logp-fill" style="width:58%"></div></div><span class="logp-val">1.73</span></div></td><td><span class="ok">✔</span></td></tr>
+            <tr><td>Oxyresveratrol</td><td>1.0</td><td><div class="logp-wrap"><div class="logp-bg"><div class="logp-fill" style="width:33%"></div></div><span class="logp-val">1.0</span></div></td><td><span class="ok">✔</span></td></tr>
+            <tr><td>Aloin</td><td>0.94</td><td><div class="logp-wrap"><div class="logp-bg"><div class="logp-fill" style="width:31%"></div></div><span class="logp-val">0.94</span></div></td><td><span class="ok">✔</span></td></tr>
+            <tr class="exc-row"><td>Ascorbic acid</td><td>−1.85</td><td><div class="logp-wrap"><div class="logp-bg"><div class="logp-fill" style="width:5%"></div></div><span class="logp-val" style="color:#888">−1.85</span></div></td><td><span class="no">✗</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="section-wrap alt">
+  <div class="section-inner">
+    <p class="eyebrow reveal">Product Prototypes</p>
+    <h2 class="section-title reveal">Demonstrated Patch Products</h2>
+    <p class="section-lead reveal">Three bioactive compounds sourced from Thailand, successfully fabricated using ACTIV-In Dot Technology.</p>
+    <div class="grid">
+      <div class="prod reveal d1"><div class="prod-head t"><img src="TURMERIC_2.png" alt="Turmeric Patch" class="prod-img"><div class="prod-head-overlay"><div class="prod-name">TURMERIC PATCH</div><div class="prod-ai">Curcumin · Anti-Inflammatory</div></div></div><div class="prod-body"><div class="prod-dose"><span class="dose-n">60</span><span class="dose-u">μg / patch</span></div><span class="prod-tag">Anti-Inflammatory</span><div class="prod-specs"><div class="prod-spec">Medical-grade silicone</div><div class="prod-spec">2.5 × 8 cm · Non-irritating</div><div class="prod-spec">Pain-free removal · LogP = 3.0</div></div></div></div>
+      <div class="prod reveal d3"><div class="prod-head a"><img src="ALOE_2.png" alt="Aloe-Vera Patch" class="prod-img"><div class="prod-head-overlay"><div class="prod-name">ALOE-VERA PATCH</div><div class="prod-ai">Aloin · Wound Healing</div></div></div><div class="prod-body"><div class="prod-dose"><span class="dose-n">20</span><span class="dose-u">μg / patch</span></div><span class="prod-tag">Wound Healing</span><div class="prod-specs"><div class="prod-spec">Medical-grade silicone</div><div class="prod-spec">2.5 × 8 cm · Non-irritating</div><div class="prod-spec">Pain-free removal · LogP = 0.94</div></div></div></div>
+      <div class="prod reveal d5"><div class="prod-head h"><img src="HEARTWOOD.jpg" alt="Heartwood Patch" class="prod-img"><div class="prod-head-overlay"><div class="prod-name">HEARTWOOD PATCH</div><div class="prod-ai">Oxyresveratrol · Anti-Tyrosinase</div></div></div><div class="prod-body"><div class="prod-dose"><span class="dose-n">300</span><span class="dose-u">μg / patch</span></div><span class="prod-tag">Anti-Tyrosinase</span><div class="prod-specs"><div class="prod-spec">Medical-grade silicone</div><div class="prod-spec">2.5 × 8 cm · Non-irritating</div><div class="prod-spec">Artocarpus lakoocha heartwood</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUCTURE -->
+<section id="structure" class="section-wrap">
+  <div class="section-inner">
+    <p class="eyebrow reveal">Technical</p>
+    <h2 class="section-title reveal">Patch Structure &amp; RGB Dosing System</h2>
+    <div class="gold-bar reveal"></div>
+    <div class="grid">
+      <div class="reveal">
+        <div class="layer-stack"><div class="layer l1">Backing Substrate</div><div class="layer l2">Microencapsulated AIs</div><div class="layer l3">Adhesive Layer</div><div class="layer l4">Release Film</div></div>
+        <div class="rgb-block"><div class="rgb-label">RGB Dosing Encoding (R=G=B Monochrome)</div><div class="rgb-bar"><div class="rgb-seg" style="background:rgb(0,0,0)"></div><div class="rgb-seg" style="background:rgb(51,51,51)"></div><div class="rgb-seg" style="background:rgb(102,102,102)"></div><div class="rgb-seg" style="background:rgb(153,153,153)"></div><div class="rgb-seg" style="background:rgb(204,204,204)"></div><div class="rgb-seg" style="background:rgb(255,255,255)"></div></div><div class="rgb-annot"><span>0 μg/cm² (Min)</span><span>255 μg/cm² (Max)</span></div></div>
+      </div>
+      <div class="struct-info reveal d2">
+        <div class="blk"><div class="blk-title">Fabrication Specs</div><ul class="info-ul"><li>Patch size customizable up to A4 format</li><li>Backing: silicone, hydrocolloid, and other substrates</li><li>Resolution: 600 DPI spatial control</li><li>Speed: 30 milliseconds per sheet</li></ul></div>
+        <div class="blk"><div class="blk-title">B2B Applications</div><ul class="info-ul"><li>Topical patch OEM manufacturers</li><li>Beauty and aesthetics clinics</li><li>Wellness centers seeking personalized solutions</li><li>Startups — low MOQ: 1,000 patches for $300</li></ul></div>
+        <div class="blk"><div class="blk-title">Authors</div><p style="font-size:13px;color:var(--text2);line-height:1.7">Lapporn Vayachuta* et al. · NANOTEC, NSTDA, Pathum Thani, Thailand<br><span style="color:var(--gray)">*Lapporn@nanotec.or.th</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section id="footer-section">
+  <div class="footer-grid">
+    <div class="reveal"><div class="footer-brand-name">ACTIV-In Dot Tech.</div><div class="footer-brand-sub">NANOTEC · NSTDA · Thailand</div><p class="footer-desc">National Nanotechnology Center, National Science and Technology Development Agency, Khlong Luang, Pathum Thani 12120, Thailand</p></div>
+    <div class="reveal d2"><div class="f-col-title">Contact</div><div class="f-contact"><strong>Corresponding Author</strong>Lapporn Vayachuta</div><div class="f-contact"><strong>Email</strong>Lapporn@nanotec.or.th</div><div class="f-contact"><strong>Event</strong>9th China (Shanghai) International Invention Innovation Exhibition<br>June 10–14, 2026 · Shanghai World Expo Exhibition and Convention Center</div></div>
+    <div class="reveal d4"><div class="f-col-title">Patents Filed</div><div class="f-patent"><div class="pt">"Polymer compositions for entrapsulated oxyresveratrol substances…"</div><div class="pn">App. No. 2503001237 (TH) · April 2025</div></div><div class="f-patent"><div class="pt">"Carrier compositions for delivering substance into skin"</div><div class="pn">App. No. 2203002560 (TH) · September 2022</div></div><div class="f-patent"><div class="pt">"Polymer compositions for controlled release of metabolite substances"</div><div class="pn">App. No. 2103002600 (TH) · October 2021</div></div></div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-slogan">"<em>ACTIV-In Dot Technology</em> — advancing the future of personalized topical patch fabrication."</div>
+    <div class="footer-copy">第九届中国（上海）国际发明创新展 · 2026</div>
+  </div>
+</section>
+
+<script>
+/* ── HERO BACKGROUND CANVAS (full-page, pointer-events:none, mouse via hero) ── */
+(function(){
+  const canvas=document.getElementById('hero-canvas');
+  if(!canvas) return;
+  const ctx=canvas.getContext('2d');
+  const heroEl=document.getElementById('hero');
+  let W,H,mx=-9999,my=-9999,active=false;
+
+  function resize(){
+    W=canvas.width=heroEl.offsetWidth;
+    H=canvas.height=heroEl.offsetHeight;
+    // re-seed particles within new bounds
+    nodes.forEach(n=>n.reset());
+  }
+
+  // Mouse on the hero section (canvas has pointer-events:none)
+  heroEl.addEventListener('mousemove',e=>{
+    const r=canvas.getBoundingClientRect();
+    mx=e.clientX-r.left; my=e.clientY-r.top; active=true;
+  });
+  heroEl.addEventListener('mouseleave',()=>{ active=false; mx=-9999; my=-9999; });
+
+  class Node{
+    constructor(){ this.reset(); this.oy=Math.random()*2000; } // stagger start y
+    reset(){
+      this.ox=Math.random()*(W||400); this.oy=Math.random()*(H||800);
+      this.x=this.ox; this.y=this.oy;
+      this.vx=(Math.random()-.5)*.5; this.vy=(Math.random()-.5)*.5;
+      this.r=Math.random()*3.5+1.5;
+      this.base=Math.random()*.55+.25; this.alpha=this.base;
+      const t=Math.random();
+      this.color=t>.65?'#b8922a':t>.35?'#c41230':'#0d2145';
+    }
+    update(){
+      this.ox+=this.vx; this.oy+=this.vy;
+      if(this.ox<0)this.ox=W; if(this.ox>W)this.ox=0;
+      if(this.oy<0)this.oy=H; if(this.oy>H)this.oy=0;
+      const dx=this.ox-mx,dy=this.oy-my,d=Math.sqrt(dx*dx+dy*dy),R=200;
+      if(d<R){
+        const f=(1-d/R);
+        this.x=this.ox+(dx/d)*f*130;
+        this.y=this.oy+(dy/d)*f*130;
+        this.alpha=Math.min(.95,this.base+f*.65);
+      } else {
+        this.x+=(this.ox-this.x)*.07;
+        this.y+=(this.oy-this.y)*.07;
+        this.alpha+=(this.base-this.alpha)*.04;
+      }
+    }
+    draw(){
+      // soft glow
+      const g=ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.r*4);
+      g.addColorStop(0,this.color); g.addColorStop(1,'transparent');
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r*4,0,Math.PI*2);
+      ctx.fillStyle=g; ctx.globalAlpha=this.alpha*.28; ctx.fill();
+      // solid core
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=this.color; ctx.globalAlpha=this.alpha; ctx.fill();
+    }
+  }
+
+  const nodes=Array.from({length:180},()=>new Node());
+  window.addEventListener('resize',()=>{ resize(); });
+  // Delay resize until layout is settled
+  setTimeout(resize,50);
+
+  function drawWeb(){
+    const CR=120;
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<CR){
+          ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(nodes[j].x,nodes[j].y);
+          ctx.strokeStyle='#b8922a'; ctx.globalAlpha=(1-d/CR)*.2; ctx.lineWidth=.7; ctx.stroke();
+        }
+      }
+      // lines to cursor
+      if(active){
+        const dx=nodes[i].x-mx,dy=nodes[i].y-my,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<230){
+          ctx.beginPath(); ctx.moveTo(nodes[i].x,nodes[i].y); ctx.lineTo(mx,my);
+          ctx.strokeStyle=nodes[i].color; ctx.globalAlpha=(1-d/230)*.55; ctx.lineWidth=.9; ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function drawCursor(){
+    if(!active) return;
+    const g=ctx.createRadialGradient(mx,my,0,mx,my,80);
+    g.addColorStop(0,'rgba(196,18,48,.18)'); g.addColorStop(.5,'rgba(184,146,42,.07)'); g.addColorStop(1,'transparent');
+    ctx.beginPath(); ctx.arc(mx,my,80,0,Math.PI*2); ctx.fillStyle=g; ctx.globalAlpha=1; ctx.fill();
+    ctx.beginPath(); ctx.arc(mx,my,5,0,Math.PI*2); ctx.fillStyle='#c41230'; ctx.globalAlpha=.85; ctx.fill();
+    ctx.beginPath(); ctx.arc(mx,my,15,0,Math.PI*2); ctx.strokeStyle='rgba(184,146,42,.5)'; ctx.globalAlpha=1; ctx.lineWidth=1; ctx.stroke();
+  }
+
+  function animate(){
+    ctx.clearRect(0,0,W,H); ctx.globalAlpha=1;
+    drawWeb();
+    nodes.forEach(n=>{ n.update(); n.draw(); });
+    drawCursor();
+    ctx.globalAlpha=1;
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+
+/* ── NAVBAR ── */
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',scrollY>60));
+
+/* ── NAV DOTS ── */
+const secs=['hero','about','process','advantages','criteria','products','structure'];
+const ndots=document.querySelectorAll('.nav-dot');
+function updateDots(){ let cur='hero'; secs.forEach(id=>{ const el=document.getElementById(id); if(el&&scrollY>=el.offsetTop-220) cur=id; }); ndots.forEach((d,i)=>d.classList.toggle('active',secs[i]===cur)); }
+window.addEventListener('scroll',updateDots);
+ndots.forEach((d,i)=>d.addEventListener('click',()=>document.getElementById(secs[i]).scrollIntoView({behavior:'smooth'})));
+
+/* ── SCROLL REVEAL ── */
+const io=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('on'); }); },{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ── CONNECTOR ── */
+const connIO=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); connIO.unobserve(e.target); } }); },{threshold:.3});
+document.querySelectorAll('.connector').forEach(c=>connIO.observe(c));
+
+/* ── SVG CIRCLE ── */
+const arcEl=document.querySelector('.arc-draw');
+const circIO=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ if(arcEl) arcEl.style.strokeDashoffset='0'; document.querySelectorAll('.spoke').forEach((s,i)=>setTimeout(()=>{ s.style.transition='opacity .4s ease'; s.style.opacity='.35'; },500+i*120)); document.querySelectorAll('.node').forEach((n,i)=>setTimeout(()=>{ n.style.transition='opacity .4s ease'; n.style.opacity='1'; },700+i*150)); document.querySelectorAll('.nlabel').forEach((n,i)=>setTimeout(()=>{ n.style.transition='opacity .3s ease'; n.style.opacity='1'; },800+i*100)); circIO.disconnect(); } }); },{threshold:.3});
+const cw=document.querySelector('.circle-wrap'); if(cw) circIO.observe(cw);
+
+/* ── COUNTERS ── */
+function runCount(el){ const target=+el.dataset.count,suf=el.dataset.suffix||'',t0=performance.now(),dur=1600; function tick(now){ const p=Math.min((now-t0)/dur,1),ease=1-Math.pow(1-p,3); el.textContent=Math.round(ease*target)+suf; if(p<1) requestAnimationFrame(tick); } requestAnimationFrame(tick); }
+const cntIO=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.querySelectorAll('[data-count]').forEach(runCount); cntIO.unobserve(e.target); } }); },{threshold:.3});
+['hero','advantages'].forEach(id=>{ const el=document.getElementById(id); if(el) cntIO.observe(el); });
+
+/* ── LOGP BARS ── */
+const logpIO=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.querySelectorAll('.logp-fill').forEach(b=>b.classList.add('on')); logpIO.unobserve(e.target); } }); },{threshold:.2});
+document.querySelectorAll('.ai-table').forEach(t=>logpIO.observe(t));
+
+/* ── PATCH LAYERS ── */
+const layIO=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.querySelectorAll('.layer').forEach(l=>l.classList.add('on')); layIO.unobserve(e.target); } }); },{threshold:.2});
+document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
+</script>
+</body>
+</html>
