@@ -1091,9 +1091,11 @@ document.querySelectorAll('.layer-stack').forEach(s => layIO.observe(s));
   const brand = document.querySelector('.hero-brand');
   const vidWrap = document.querySelector('.hero-vid-wrap');
   if(!brand || !vidWrap) return;
-  // Show on page load, auto-hide after 4s
-  vidWrap.classList.add('visible');
-  setTimeout(() => { if(!brand.matches(':hover')) vidWrap.classList.remove('visible'); }, 4000);
+  // Show after 5s delay, auto-hide 4s later
+  setTimeout(() => {
+    vidWrap.classList.add('visible');
+    setTimeout(() => { if(!brand.matches(':hover')) vidWrap.classList.remove('visible'); }, 4000);
+  }, 5000);
   // Hover continues to work normally
   brand.addEventListener('mouseenter', () => vidWrap.classList.add('visible'));
   brand.addEventListener('mouseleave', () => vidWrap.classList.remove('visible'));
