@@ -1094,7 +1094,7 @@ document.querySelectorAll('.layer-stack').forEach(s => layIO.observe(s));
   // Show after 5s delay, auto-hide 4s later
   setTimeout(() => {
     vidWrap.classList.add('visible');
-    setTimeout(() => { if(!brand.matches(':hover')) vidWrap.classList.remove('visible'); }, 4000);
+    setTimeout(() => { if(!brand.matches(':hover')) vidWrap.classList.remove('visible'); }, 10000);
   }, 5000);
   // Hover continues to work normally
   brand.addEventListener('mouseenter', () => vidWrap.classList.add('visible'));
