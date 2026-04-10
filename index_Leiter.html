@@ -339,9 +339,27 @@ body{font-family:'Lato',sans-serif;background:var(--fog);color:var(--text);overf
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 .version-btn{position:fixed;bottom:32px;right:36px;z-index:998;background:rgba(42,50,64,.07);color:var(--ink);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;border:1.5px solid rgba(42,50,64,.25);border-radius:3px;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;backdrop-filter:blur(6px)}
 .version-btn:hover{background:var(--ink);color:var(--fog)}
+/* ── MOBILE SPLASH ── */
+#mobile-splash{position:fixed;inset:0;z-index:9999;background:rgba(232,226,217,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:1;transition:opacity 1s ease}
+#mobile-splash.fade-out{opacity:0;pointer-events:none}
+.sp-chars{display:flex;flex-direction:column;align-items:center}
+.sp-char{font-family:'Noto Serif SC',serif;font-size:84px;font-weight:900;line-height:1.0;color:var(--ink);opacity:0;animation:spChar .6s cubic-bezier(.22,.61,.36,1) forwards}
+.sp-char:nth-child(1){animation-delay:.2s}.sp-char:nth-child(2){animation-delay:.45s}.sp-char:nth-child(3){animation-delay:.7s}.sp-char:nth-child(4){animation-delay:.95s}
+@keyframes spChar{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.sp-seal{width:52px;height:52px;border:2.5px solid var(--brick);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Noto Serif SC',serif;font-size:13px;font-weight:700;color:var(--brick);letter-spacing:.04em;line-height:1.3;opacity:0;animation:fadeIn .6s ease forwards 1.2s}
+.sp-sub{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);margin-top:10px;opacity:0;animation:fadeIn .6s ease forwards 1.5s}
 </style>
 </head>
 <body>
+
+<div id="mobile-splash" style="display:none">
+  <div class="sp-chars">
+    <span class="sp-char">创</span><span class="sp-char">新</span><span class="sp-char">科</span><span class="sp-char">技</span>
+  </div>
+  <div class="sp-seal">纳<br>米</div>
+  <div class="sp-sub">Innovation · Science · Technology</div>
+</div>
+<script>(function(){if(window.innerWidth<=900){var s=document.getElementById('mobile-splash');s.style.display='flex';setTimeout(function(){s.classList.add('fade-out');setTimeout(function(){s.style.display='none'},1000)},3000)}})();</script>
 
 <a class="version-btn" href="index_starry.html">✦ Starry Version</a>
 
