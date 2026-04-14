@@ -136,11 +136,10 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   opacity:0;animation:fadeUp .9s ease forwards .45s;
 }
 .hero-paper-sub{
-  font-family:'Lato',sans-serif;font-size:11px;font-weight:300;
-  color:var(--h-mint);letter-spacing:.06em;
+  font-family:'Lato',sans-serif;font-size:13px;font-weight:400;
+  color:rgba(255,255,255,.72);letter-spacing:.04em;
   max-width:480px;margin-bottom:24px;
   opacity:0;animation:fadeUp .9s ease forwards .55s;
-  font-style:italic;
 }
 
 /* Brand */
@@ -152,14 +151,14 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   opacity:0;animation:fadeUp .9s ease forwards .65s;
   cursor:default;
 }
-/* Hero brand accent — green */
+/* Hero brand accent — green + yellow spot */
 .hero-brand .red{color:var(--h-green)}
-.hero-brand .gold{color:var(--h-mint)}
+.hero-brand .gold{color:#FFD700}
 
 /* Brand shimmer line — green→mint */
 .brand-line{
   width:200px;height:3px;margin-bottom:28px;
-  background:linear-gradient(90deg,var(--h-green),var(--h-mint),var(--h-pale),var(--h-green));
+  background:linear-gradient(90deg,var(--h-green),var(--h-mint),#FFD700,var(--h-pale),var(--h-green));
   background-size:200% 100%;
   animation:shimmer 3s linear infinite, growLine .8s ease forwards .9s;
   transform:scaleX(0);transform-origin:left;
@@ -207,7 +206,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   opacity:0;animation:fadeUp .9s ease forwards 1.3s;
 }
 @media(max-width:480px){.hero-date{font-size:10px}}
-.hero-date strong{color:rgba(255,255,255,.65)}
+.hero-date strong{color:#FFD700}
 
 /* ── RIGHT PANEL — English typographic stack ─── */
 .hero-right{
@@ -221,27 +220,28 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 .cn-chars{
   display:flex;flex-direction:column;align-items:center;
-  gap:22px;
+  gap:10px;
   position:relative;
   transform:translateY(-20px);
   width:100%;
 }
 
-/* Large typographic words — elegant stretched stack */
+/* Large typographic words — justified, edge-to-edge */
 .cn-char{
   font-family:'Montserrat',sans-serif;
-  font-size:clamp(13px,1.6vw,20px);
-  font-weight:700;
-  line-height:1;
-  letter-spacing:.42em;
-  padding-right:.42em;
+  font-size:clamp(30px,3.6vw,50px);
+  font-weight:800;
+  line-height:1.05;
+  letter-spacing:0;
   text-align:center;
+  text-align-last:auto;
   width:100%;
+  padding-right:0;
   background:linear-gradient(175deg,#ffffff 0%,var(--h-mint) 40%,var(--h-pale) 60%,rgba(255,255,255,.6) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   position:relative;
-  filter:drop-shadow(0 0 18px rgba(77,184,140,.25));
+  filter:drop-shadow(0 0 22px rgba(77,184,140,.28));
   opacity:0;
   white-space:nowrap;
 }
@@ -277,14 +277,14 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .cn-deco-line.top{height:80px;top:-90px}
 .cn-deco-line.bot{height:80px;bottom:-90px}
 
-/* NAC seal — green */
+/* NAC seal — yellow */
 .cn-seal{
-  margin-top:-23px;align-self:center;
+  margin-top:52px;align-self:center;
   width:56px;height:56px;
-  border:2.5px solid var(--h-green);border-radius:4px;
+  border:2.5px solid #FFD700;border-radius:4px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;
-  color:var(--h-green);letter-spacing:.04em;line-height:1.3;
+  color:#FFD700;letter-spacing:.04em;line-height:1.3;
   opacity:0;animation:fadeIn .6s ease forwards 1.9s;
   cursor:pointer;position:relative;
 }
@@ -932,7 +932,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       this.vx = (Math.random()-.5)*.4; this.vy = (Math.random()-.5)*.4;
       this.r = Math.random()*2.8+0.8;
       this.base = Math.random()*.55+0.25; this.alpha = this.base;
-      this.color = Math.random() > .55 ? '#4db88c' : '#046A38';
+      const t=Math.random();this.color=t>.55?'#4db88c':t>.15?'#046A38':'#FFD700';
     }
     update(){
       this.ox += this.vx; this.oy += this.vy;
@@ -1032,7 +1032,7 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
       this.vx=(Math.random()-.5)*.5;this.vy=(Math.random()-.5)*.5;
       this.r=Math.random()*4+2;this.base=Math.random()*.6+.25;this.alpha=this.base;
       const t=Math.random();
-      this.color=t>.66?'#c9a84c':t>.33?'#c41230':'#ffffff';
+      this.color=t>.66?'#4db88c':t>.33?'#046A38':t>.12?'#a8e6c4':'#FFD700';
     }
     update(){
       this.ox+=this.vx;this.oy+=this.vy;
@@ -1054,7 +1054,7 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
     for(let i=0;i<nodes.length;i++){
       for(let j=i+1;j<nodes.length;j++){
         const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y,d=Math.sqrt(dx*dx+dy*dy);
-        if(d<R){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle='#c9a84c';ctx.globalAlpha=(1-d/R)*.22;ctx.lineWidth=.8;ctx.stroke();}
+        if(d<R){ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.strokeStyle=(nodes[i].color==='#FFD700'||nodes[j].color==='#FFD700')?'#FFD700':'#4db88c';ctx.globalAlpha=(1-d/R)*.22;ctx.lineWidth=.8;ctx.stroke();}
       }
       if(active){
         const dx=nodes[i].x-mx,dy=nodes[i].y-my,d=Math.sqrt(dx*dx+dy*dy);
@@ -1065,10 +1065,10 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
   function drawCursor(){
     if(!active) return;
     const g=ctx.createRadialGradient(mx,my,0,mx,my,90);
-    g.addColorStop(0,'rgba(196,18,48,.35)');g.addColorStop(.4,'rgba(201,168,76,.12)');g.addColorStop(1,'transparent');
+    g.addColorStop(0,'rgba(4,106,56,.35)');g.addColorStop(.4,'rgba(77,184,140,.12)');g.addColorStop(1,'transparent');
     ctx.beginPath();ctx.arc(mx,my,90,0,Math.PI*2);ctx.fillStyle=g;ctx.globalAlpha=1;ctx.fill();
-    ctx.beginPath();ctx.arc(mx,my,5,0,Math.PI*2);ctx.fillStyle='#c41230';ctx.globalAlpha=.9;ctx.fill();
-    ctx.beginPath();ctx.arc(mx,my,14,0,Math.PI*2);ctx.strokeStyle='rgba(201,168,76,.6)';ctx.globalAlpha=1;ctx.lineWidth=1;ctx.stroke();
+    ctx.beginPath();ctx.arc(mx,my,5,0,Math.PI*2);ctx.fillStyle='#046A38';ctx.globalAlpha=.9;ctx.fill();
+    ctx.beginPath();ctx.arc(mx,my,14,0,Math.PI*2);ctx.strokeStyle='rgba(77,184,140,.6)';ctx.globalAlpha=1;ctx.lineWidth=1;ctx.stroke();
   }
   function animate(){ ctx.clearRect(0,0,W,H);ctx.globalAlpha=1;drawWeb();nodes.forEach(n=>{n.update();n.draw();});drawCursor();ctx.globalAlpha=1;requestAnimationFrame(animate); }
   animate();
