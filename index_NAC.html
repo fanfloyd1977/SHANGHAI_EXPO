@@ -67,6 +67,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   z-index:2;pointer-events:none;
   opacity:0;transition:opacity .45s ease;
 }
+@media(max-width:900px){.hero-vid-wrap{left:50%}}
 .hero-vid-wrap.visible{opacity:1}
 .hero-vid{
   width:380px;
@@ -568,8 +569,8 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .vc-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
 .vc-count{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:var(--h-mint);min-width:28px;display:inline-block}
 .reaction-title{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:22px}
-.reaction-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
-.r-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(4,106,56,.3);border-radius:14px;padding:20px 30px;cursor:pointer;transition:border-color .25s,background .25s,transform .2s;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:120px;font-family:inherit}
+.reaction-row{display:flex;justify-content:center;gap:14px;flex-wrap:nowrap;max-width:480px;margin:0 auto}
+.r-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(4,106,56,.3);border-radius:14px;padding:16px 0;cursor:pointer;transition:border-color .25s,background .25s,transform .2s;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1 1 0;font-family:inherit}
 .r-card:hover{border-color:var(--h-mint);background:rgba(77,184,140,.07);transform:translateY(-3px)}
 .r-card.picked{border-color:#FFD700;background:rgba(255,215,0,.07)}
 .r-card.picked{cursor:default}
@@ -580,7 +581,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .r-card.picked .r-count{color:#FFD700}
 .r-card.bump .r-count{animation:rBump .35s ease}
 @keyframes rBump{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
-@media(max-width:600px){.r-card{min-width:90px;padding:16px 18px}.r-icon{font-size:22px}.r-count{font-size:20px}}
+@media(max-width:600px){.reaction-row{gap:10px;max-width:340px}.r-card{padding:14px 0}.r-icon{font-size:20px}.r-count{font-size:18px}.r-label{font-size:9px}}
 
 /* ── KEYFRAMES ───────────────────────── */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
