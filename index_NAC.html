@@ -62,7 +62,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .hero-vid-wrap{
   position:absolute;
   left:calc(50% - 30px);
-  top:50%;
+  top:55%;
   transform:translate(-50%,-50%);
   z-index:2;pointer-events:none;
   opacity:0;transition:opacity .45s ease;
@@ -97,13 +97,13 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .hero-left{
   position:relative;z-index:4;
   display:flex;flex-direction:column;justify-content:center;
-  padding:100px 60px 60px 72px;
+  padding:60px 60px 40px 72px;
 }
 @media(max-width:900px){.hero-left{padding:100px 32px 60px}}
 
 .event-top{
   display:flex;flex-direction:column;gap:6px;
-  margin-bottom:48px;
+  margin-bottom:22px;
   opacity:0;animation:fadeUp .9s ease forwards .2s;
 }
 /* Hero accent text — NAC blue */
@@ -132,13 +132,13 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.1vw,13px);
   font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   color:rgba(255,255,255,.35);line-height:1.6;
-  max-width:480px;margin-bottom:10px;
+  max-width:480px;margin-bottom:22px;
   opacity:0;animation:fadeUp .9s ease forwards .45s;
 }
 .hero-paper-sub{
   font-family:'Lato',sans-serif;font-size:13px;font-weight:400;
   color:rgba(255,255,255,.72);letter-spacing:.04em;
-  max-width:480px;margin-bottom:24px;
+  max-width:480px;margin-bottom:12px;
   opacity:0;animation:fadeUp .9s ease forwards .55s;
 }
 
@@ -157,7 +157,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 /* Brand shimmer line — green→mint */
 .brand-line{
-  width:200px;height:3px;margin-bottom:28px;
+  width:200px;height:3px;margin-bottom:14px;
   background:linear-gradient(90deg,var(--h-green),var(--h-mint),#FFD700,var(--h-pale),var(--h-green));
   background-size:200% 100%;
   animation:shimmer 3s linear infinite, growLine .8s ease forwards .9s;
@@ -169,7 +169,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .hero-tagline{
   font-size:clamp(13px,1.4vw,15px);font-weight:300;
   color:rgba(255,255,255,.55);line-height:1.8;
-  max-width:440px;margin-bottom:44px;
+  max-width:440px;margin-bottom:22px;
   opacity:0;animation:fadeUp .9s ease forwards .85s;
 }
 .hero-tagline em{color:var(--h-pale);font-style:normal;font-weight:400}
@@ -183,7 +183,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 }
 @media(max-width:480px){.hero-stats{grid-template-columns:repeat(2,1fr)}}
 .hero-stat{
-  padding:14px 12px;text-align:center;
+  padding:9px 12px;text-align:center;
   border-right:1px solid rgba(77,184,140,.15);
 }
 .hero-stat:last-child{border-right:none}
@@ -200,7 +200,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 /* Date strip */
 .hero-date{
-  margin-top:32px;padding-top:24px;
+  margin-top:16px;padding-top:12px;
   border-top:1px solid rgba(255,255,255,.08);
   font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.06em;
   opacity:0;animation:fadeUp .9s ease forwards 1.3s;
@@ -213,7 +213,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   position:relative;z-index:4;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  padding:0px 32px 60px;
+  padding:60px 32px 0px;
   background:rgba(255,255,255,.024);
 }
 @media(max-width:900px){.hero-right{display:none}}
@@ -260,6 +260,19 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   color:rgba(255,255,255,.88);letter-spacing:.15em;
   opacity:0;animation:fadeIn .8s ease forwards 1.6s;
 }
+/* Hero mini engage widget — desktop only, below cn-sub */
+.hero-engage{margin-top:78px;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fadeIn .8s ease forwards 1.9s}
+.hvc-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);text-align:center}
+.hr-row{display:flex;gap:8px}
+.hr-btn{background:rgba(255,255,255,.03);border:1.5px solid rgba(4,106,56,.3);border-radius:10px;padding:7px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:border-color .2s,background .2s,transform .2s;font-family:inherit;min-width:44px}
+.hr-btn:hover{border-color:var(--h-mint);background:rgba(77,184,140,.08);transform:translateY(-2px)}
+.hr-btn.picked{border-color:#FFD700;background:rgba(255,215,0,.07)}
+.hr-btn.picked{cursor:default}
+.hr-icon{font-size:14px;line-height:1}
+.hr-count{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:var(--h-mint);transition:color .2s}
+.hr-btn.picked .hr-count{color:#FFD700}
+.hr-btn.bump .hr-count{animation:rBump .35s ease}
+
 /* Mobile — show tagline in left panel since right panel is hidden */
 .cn-sub-mobile{
   display:none;
@@ -548,6 +561,27 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .footer-slogan em{color:var(--gold2);font-style:normal}
 .footer-copy{font-size:11px;color:rgba(255,255,255,.2)}
 
+/* ── ENGAGE (counter + reactions) ───────────────────────── */
+.engage-wrap{max-width:1060px;margin:0 auto 48px;padding:40px 0;border-top:1px solid rgba(255,255,255,.07);text-align:center}
+.vc-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px}
+.vc-icon{font-size:15px;color:rgba(255,255,255,.3)}
+.vc-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.vc-count{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:var(--h-mint);min-width:28px;display:inline-block}
+.reaction-title{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:22px}
+.reaction-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap}
+.r-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(4,106,56,.3);border-radius:14px;padding:20px 30px;cursor:pointer;transition:border-color .25s,background .25s,transform .2s;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:120px;font-family:inherit}
+.r-card:hover{border-color:var(--h-mint);background:rgba(77,184,140,.07);transform:translateY(-3px)}
+.r-card.picked{border-color:#FFD700;background:rgba(255,215,0,.07)}
+.r-card.picked{cursor:default}
+.r-icon{font-size:26px;line-height:1}
+.r-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.5);transition:color .25s}
+.r-card.picked .r-label{color:#FFD700}
+.r-count{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:var(--h-mint);transition:color .25s;min-height:30px}
+.r-card.picked .r-count{color:#FFD700}
+.r-card.bump .r-count{animation:rBump .35s ease}
+@keyframes rBump{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
+@media(max-width:600px){.r-card{min-width:90px;padding:16px 18px}.r-icon{font-size:22px}.r-count{font-size:20px}}
+
 /* ── KEYFRAMES ───────────────────────── */
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
@@ -614,7 +648,6 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
     <p class="hero-paper">
       Preparation of Microencapsulated AIs for Fabrication of a<br>Topical Patch Using Laser Printing Technology
     </p>
-    <p class="hero-paper-sub">Presented at NAC2026 · Thai Science Park, Pathum Thani · April 24–28, 2026</p>
 
     <h1 class="hero-brand">
       <span class="red">ACTIV</span><span style="color:rgba(255,255,255,.3)">-In</span><br>
@@ -658,6 +691,14 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <div class="cn-seal-qr"><img src="nac_qr.png" width="120" height="120" style="display:block;border-radius:4px"><span>NAC 2026</span></div>
     </div>
     <div class="cn-sub">SUSTAINABLE · ECONOMY · SCIENCE</div>
+    <div class="hero-engage">
+      <div class="hvc-label">How do you feel about this technology?</div>
+      <div class="hr-row">
+        <button class="hr-btn" data-key="inspiring"><span class="hr-icon">❤️</span><span class="hr-count" id="hrc-inspiring">—</span></button>
+        <button class="hr-btn" data-key="welldone"><span class="hr-icon">👏</span><span class="hr-count" id="hrc-welldone">—</span></button>
+        <button class="hr-btn" data-key="innovative"><span class="hr-icon">🔬</span><span class="hr-count" id="hrc-innovative">—</span></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -904,6 +945,33 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <div class="f-patent"><div class="pt">"Polymer compositions for controlled release of metabolite substances"</div><div class="pn">App. No. 2103002600 (TH) · October 2021</div></div>
     </div>
   </div>
+  <!-- ── COUNTER + REACTIONS ── -->
+  <div class="engage-wrap">
+    <div class="vc-row">
+      <span class="vc-icon">👁</span>
+      <span class="vc-label">Page Views</span>
+      <span class="vc-count" id="vc-num">—</span>
+    </div>
+    <div class="reaction-title">How do you feel about this technology?</div>
+    <div class="reaction-row">
+      <button class="r-card" data-key="inspiring">
+        <span class="r-icon">❤️</span>
+        <span class="r-label">Inspiring</span>
+        <span class="r-count" id="rc-inspiring">—</span>
+      </button>
+      <button class="r-card" data-key="welldone">
+        <span class="r-icon">👏</span>
+        <span class="r-label">Well done</span>
+        <span class="r-count" id="rc-welldone">—</span>
+      </button>
+      <button class="r-card" data-key="innovative">
+        <span class="r-icon">🔬</span>
+        <span class="r-label">Innovative</span>
+        <span class="r-count" id="rc-innovative">—</span>
+      </button>
+    </div>
+  </div>
+
   <div class="footer-bottom">
     <div class="footer-slogan">"<em>ACTIV-In Dot Technology</em> — advancing the future of personalized topical patch fabrication."</div>
     <div class="footer-copy">NAC2026 · 21st NSTDA Annual Conference · Pathum Thani, Thailand</div>
@@ -1072,6 +1140,84 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
   }
   function animate(){ ctx.clearRect(0,0,W,H);ctx.globalAlpha=1;drawWeb();nodes.forEach(n=>{n.update();n.draw();});drawCursor();ctx.globalAlpha=1;requestAnimationFrame(animate); }
   animate();
+})();
+
+/* ── PAGE COUNTER + REACTIONS ─────────────────────────── */
+(function(){
+  var BASE = 'https://api.counterapi.dev/v1/fanfloyd1977-nac/';
+  var STORE = 'nac_reaction_v1';
+  /* live key names — fresh counters starting at 0 */
+  var PV_KEY = 'nac26-pv';
+  var REACT_KEYS = { inspiring:'nac26-ins', welldone:'nac26-wd', innovative:'nac26-inv' };
+
+  /* --- helper: set count on all instances of a reaction key --- */
+  function setReactCount(key, val){
+    var footer = document.getElementById('rc-' + key);
+    var hero   = document.getElementById('hrc-' + key);
+    if(footer) footer.textContent = val;
+    if(hero)   hero.textContent   = val;
+  }
+  function setPicked(key){
+    document.querySelectorAll('.r-card,.hr-btn').forEach(function(c){ c.classList.remove('picked'); });
+    if(key){
+      document.querySelectorAll('[data-key="' + key + '"]').forEach(function(c){ c.classList.add('picked'); });
+    }
+  }
+
+  /* --- Page view counter: increment on every load --- */
+  fetch(BASE + PV_KEY + '/up')
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var n = (d.count || 1).toLocaleString();
+      var el = document.getElementById('vc-num');
+      if(el) el.textContent = n;
+    })
+    .catch(function(){
+      var el = document.getElementById('vc-num');
+      if(el) el.textContent = '1';
+    });
+
+  /* --- Load reaction counts (read-only, no increment) --- */
+  Object.keys(REACT_KEYS).forEach(function(label){
+    fetch(BASE + REACT_KEYS[label] + '/')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ setReactCount(label, d.count || 0); })
+      .catch(function(){  setReactCount(label, 0); });
+  });
+
+  /* --- Restore previously picked reaction --- */
+  var picked = localStorage.getItem(STORE);
+  if(picked) setPicked(picked);
+
+  /* --- Handle reaction click (Option A: can change reaction) --- */
+  document.querySelectorAll('.r-card,.hr-btn').forEach(function(card){
+    card.addEventListener('click', function(){
+      var key = this.dataset.key;
+      var prev = localStorage.getItem(STORE);
+      if(prev === key) return; /* clicked same — do nothing */
+
+      setPicked(key);
+      localStorage.setItem(STORE, key);
+
+      /* Increment new choice */
+      fetch(BASE + REACT_KEYS[key] + '/up')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          setReactCount(key, d.count);
+          /* bump both instances */
+          document.querySelectorAll('[data-key="' + key + '"]').forEach(function(c){
+            c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
+          });
+        });
+
+      /* Decrement previous choice (if any) */
+      if(prev && REACT_KEYS[prev]){
+        fetch(BASE + REACT_KEYS[prev] + '/down')
+          .then(function(r){ return r.json(); })
+          .then(function(d){ setReactCount(prev, Math.max(0, d.count)); });
+      }
+    });
+  });
 })();
 </script>
 </body>
