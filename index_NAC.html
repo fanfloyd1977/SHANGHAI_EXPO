@@ -44,7 +44,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 #navbar.scrolled .nav-brand{opacity:1}
 .nav-dots{display:flex;gap:10px}
 .nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;transition:background .3s,transform .3s}
-.nav-dot.active,.nav-dot:hover{background:var(--gold);transform:scale(1.4)}
+.nav-dot.active,.nav-dot:hover{background:var(--h-mint);transform:scale(1.4)}
 
 /* ── HERO ────────────────────────────────── */
 #hero{
@@ -106,10 +106,11 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   margin-bottom:48px;
   opacity:0;animation:fadeUp .9s ease forwards .2s;
 }
-/* Hero accent text — green */
+/* Hero accent text — NAC blue */
 .event-year{
-  font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;
-  letter-spacing:.25em;color:var(--h-green);text-transform:uppercase;margin-bottom:4px;
+  font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;
+  letter-spacing:.25em;color:#1565C0;text-transform:uppercase;margin-bottom:4px;
+  text-shadow:0 0 18px rgba(21,101,192,.45);
 }
 .event-cn{
   font-family:'Montserrat',sans-serif;font-size:14px;font-weight:700;color:rgba(255,255,255,.9);
@@ -220,23 +221,27 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 .cn-chars{
   display:flex;flex-direction:column;align-items:center;
-  gap:0;
+  gap:22px;
   position:relative;
-  transform:translateY(-35px);
+  transform:translateY(-20px);
+  width:100%;
 }
 
-/* Large typographic words — green gradient */
+/* Large typographic words — elegant stretched stack */
 .cn-char{
   font-family:'Montserrat',sans-serif;
-  font-size:clamp(34px,4.2vw,56px);
-  font-weight:900;
-  line-height:1.1;
-  letter-spacing:.06em;
+  font-size:clamp(13px,1.6vw,20px);
+  font-weight:700;
+  line-height:1;
+  letter-spacing:.42em;
+  padding-right:.42em;
+  text-align:center;
+  width:100%;
   background:linear-gradient(175deg,#ffffff 0%,var(--h-mint) 40%,var(--h-pale) 60%,rgba(255,255,255,.6) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
   position:relative;
-  filter:drop-shadow(0 0 30px rgba(77,184,140,.3));
+  filter:drop-shadow(0 0 18px rgba(77,184,140,.25));
   opacity:0;
   white-space:nowrap;
 }
@@ -250,11 +255,19 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 }
 
 .cn-sub{
-  margin-top:77px;text-align:center;
-  font-family:'Montserrat',sans-serif;font-size:11px;
-  color:rgba(255,255,255,.3);letter-spacing:.13em;
+  margin-top:28px;text-align:center;
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;
+  color:rgba(255,255,255,.88);letter-spacing:.15em;
   opacity:0;animation:fadeIn .8s ease forwards 1.6s;
 }
+/* Mobile — show tagline in left panel since right panel is hidden */
+.cn-sub-mobile{
+  display:none;
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:.15em;color:rgba(255,255,255,.82);text-transform:uppercase;
+  margin-top:8px;
+}
+@media(max-width:900px){.cn-sub-mobile{display:block}}
 /* Hero deco lines — green */
 .cn-deco-line{
   width:1px;background:linear-gradient(to bottom,transparent,rgba(77,184,140,.5),transparent);
@@ -262,7 +275,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   opacity:0;animation:fadeIn .8s ease forwards 1.8s;
 }
 .cn-deco-line.top{height:80px;top:-90px}
-.cn-deco-line.bot{height:80px;bottom:-147px}
+.cn-deco-line.bot{height:80px;bottom:-90px}
 
 /* NAC seal — green */
 .cn-seal{
@@ -319,10 +332,10 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 .eyebrow{
   font-size:11px;font-weight:700;letter-spacing:.25em;
-  text-transform:uppercase;color:var(--red);
+  text-transform:uppercase;color:var(--h-green);
   margin-bottom:10px;display:flex;align-items:center;gap:10px;
 }
-.eyebrow::before{content:'';display:block;width:28px;height:2px;background:var(--red);flex-shrink:0}
+.eyebrow::before{content:'';display:block;width:28px;height:2px;background:var(--h-green);flex-shrink:0}
 .section-wrap.dark .eyebrow{color:var(--gold)}
 .section-wrap.dark .eyebrow::before{background:var(--gold)}
 
@@ -336,7 +349,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .section-lead{font-size:15px;color:#556;line-height:1.8;max-width:600px;margin-bottom:50px}
 .section-wrap.dark .section-lead{color:rgba(255,255,255,.55)}
 
-.gold-bar{width:52px;height:4px;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;margin-bottom:44px}
+.gold-bar{width:52px;height:4px;background:linear-gradient(90deg,var(--h-green),var(--h-mint));border-radius:2px;margin-bottom:44px}
 
 /* Reveal */
 .reveal{opacity:0;transform:scale(.97);transition:opacity .75s ease,transform .75s ease}
@@ -397,7 +410,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 @media(max-width:768px){#process .steps{grid-template-columns:1fr}}
 .connector{
   position:absolute;top:54px;left:calc(16.66% + 20px);right:calc(16.66% + 20px);
-  height:2px;background:linear-gradient(90deg,var(--red),var(--gold),var(--teal));
+  height:2px;background:linear-gradient(90deg,var(--h-green),var(--h-mint),var(--teal));
   transform:scaleX(0);transform-origin:left;
   transition:transform 1.2s ease .3s;
 }
@@ -424,7 +437,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   background:#fff;border:1px solid #e2e8f0;border-top:3px solid transparent;
   padding:30px 26px;transition:box-shadow .3s,border-color .3s,transform .3s;
 }
-.adv:hover{box-shadow:0 8px 36px rgba(13,33,69,.1);border-top-color:var(--red);transform:translateY(-4px)}
+.adv:hover{box-shadow:0 8px 36px rgba(13,33,69,.1);border-top-color:var(--h-green);transform:translateY(-4px)}
 .adv-icon{font-size:32px;margin-bottom:14px}
 .adv-title{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:8px;letter-spacing:.02em}
 .adv-body{font-size:13px;color:#667;line-height:1.65}
@@ -459,7 +472,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .ai-table tr:last-child td{border-bottom:none}
 .logp-wrap{display:flex;align-items:center;gap:8px}
 .logp-bg{flex:1;height:7px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
-.logp-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform 1.1s cubic-bezier(.4,0,.2,1)}
+.logp-fill{height:100%;background:linear-gradient(90deg,var(--h-green),var(--h-mint));border-radius:4px;transform:scaleX(0);transform-origin:left;transition:transform 1.1s cubic-bezier(.4,0,.2,1)}
 .logp-fill.on{transform:scaleX(1)}
 .logp-val{font-size:11px;color:var(--gold);font-weight:700;white-space:nowrap}
 .exc-row td{opacity:.35}
@@ -595,6 +608,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <span class="event-cn">21st NSTDA Annual Conference</span>
       <span class="event-en">National Science and Technology Development Agency</span>
       <span class="nac-theme-badge">🌿 Sustainable Economy through Science and Technology</span>
+      <span class="cn-sub-mobile">SUSTAINABLE · ECONOMY · SCIENCE</span>
     </div>
 
     <p class="hero-paper">
@@ -655,8 +669,8 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
         <svg id="circle-svg" viewBox="-10 -10 220 220">
           <defs>
             <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#c41230"/>
-              <stop offset="100%" stop-color="#c9a84c"/>
+              <stop offset="0%" stop-color="#046A38"/>
+              <stop offset="100%" stop-color="#4db88c"/>
             </linearGradient>
             <filter id="glow">
               <feGaussianBlur stdDeviation="4" result="blur"/>
