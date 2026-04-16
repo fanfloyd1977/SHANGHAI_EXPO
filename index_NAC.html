@@ -1052,7 +1052,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <div class="f-contact"><strong>Email</strong>Lapporn@nanotec.or.th</div>
       <div class="f-contact"><strong>Event</strong>NAC2026 · 21st NSTDA Annual Conference<br>April 24–28, 2026 · Thai Science Park, Pathum Thani</div>
       <div class="vcard-wrap">
-        <a class="vcard-btn" id="vcard-dl" href="lapporn_vayachuta.vcf" download="lapporn_vayachuta.vcf">💾 Save Contact</a>
+        <a class="vcard-btn" id="vcard-dl" href="#">💾 Save Contact</a>
         <div class="vcard-preview">
           <div class="vcp-hero">
             <div class="vcp-brand"><span class="vb-green">ACTIV</span><span style="color:rgba(255,255,255,.3)">-In</span> <span class="vb-gold">Dot</span> Tech.</div>
@@ -1365,22 +1365,35 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
     'ORG:National Nanotechnology Center (NANOTEC);NSTDA',
     'EMAIL;TYPE=WORK:Lapporn@nanotec.or.th',
     'ADR;TYPE=WORK:;;NSTDA\\, Khlong Luang;Pathum Thani;;12120;Thailand',
-    'NOTE:ACTIV-In Dot Technology · NAC2026 · April 24-28\\, 2026 · Thai Science Park\\, Pathum Thani',
+    'NOTE:ACTIV-In Dot Technology - NAC2026 - April 24-28 2026 - Thai Science Park Pathum Thani',
     'END:VCARD'
   ].join('\r\n');
-  var btn = document.getElementById('vcard-dl');
-  if(btn) btn.href = 'data:text/vcard;charset=utf-8,' + encodeURIComponent(vc);
 
-  /* Touch: show preview card on tap (download triggers naturally via <a>) */
+  var btn = document.getElementById('vcard-dl');
   var preview = document.querySelector('.vcard-preview');
-  if(btn && preview){
-    btn.addEventListener('touchend', function(){
-      preview.classList.add('show');
-      setTimeout(function(){ preview.classList.remove('show'); }, 5000);
+
+  function saveVCard(e) {
+    e.preventDefault();
+    var blob = new Blob([vc], {type: 'text/x-vcard'});
+    var url = URL.createObjectURL(blob);
+    window.location.href = url;
+  }
+
+  if(btn){
+    btn.addEventListener('click', saveVCard);
+
+    /* Touch: show preview card + trigger save simultaneously */
+    btn.addEventListener('touchend', function(e){
+      if(preview) {
+        preview.classList.add('show');
+        setTimeout(function(){ preview.classList.remove('show'); }, 5000);
+      }
+      saveVCard(e);
     });
-    /* Tap outside to dismiss */
+
+    /* Tap outside to dismiss preview */
     document.addEventListener('touchend', function(e){
-      if(!e.target.closest('.vcard-wrap')) preview.classList.remove('show');
+      if(preview && !e.target.closest('.vcard-wrap')) preview.classList.remove('show');
     });
   }
 })();
