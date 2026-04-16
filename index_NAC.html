@@ -1356,18 +1356,7 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
 
 /* ── vCARD DOWNLOAD ──────────────────────── */
 (function(){
-  var vc = [
-    'BEGIN:VCARD',
-    'VERSION:3.0',
-    'FN:Lapporn Vayachuta',
-    'N:Vayachuta;Lapporn;;;',
-    'TITLE:Senior Researcher',
-    'ORG:National Nanotechnology Center (NANOTEC);NSTDA',
-    'EMAIL;TYPE=WORK:Lapporn@nanotec.or.th',
-    'ADR;TYPE=WORK:;;NSTDA\\, Khlong Luang;Pathum Thani;;12120;Thailand',
-    'NOTE:ACTIV-In Dot Technology - NAC2026 - April 24-28 2026 - Thai Science Park Pathum Thani',
-    'END:VCARD'
-  ].join('\r\n');
+  var vc = 'BEGIN:VCARD\r\nVERSION:3.0\r\nFN:Lapporn Vayachuta\r\nEMAIL:Lapporn@nanotec.or.th\r\nEND:VCARD\r\n';
 
   var btn = document.getElementById('vcard-dl');
   var preview = document.querySelector('.vcard-preview');
@@ -1376,7 +1365,7 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
     e.preventDefault();
     var blob = new Blob([vc], {type: 'text/x-vcard'});
     var url = URL.createObjectURL(blob);
-    window.location.href = url;
+    window.open(url, '_blank');
   }
 
   if(btn){
