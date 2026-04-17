@@ -704,6 +704,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   padding:14px 20px;
   align-items:center;justify-content:space-between;gap:12px;
   font-family:'Montserrat',sans-serif;
+  transition:opacity .8s ease;
 }
 #line-banner.show{display:flex}
 #line-banner p{font-size:12px;font-weight:600;color:#fff;line-height:1.5;margin:0}
@@ -1141,7 +1142,12 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 /* ── LINE BROWSER DETECTION ─────────────────── */
 (function(){
   if(/Line\//i.test(navigator.userAgent)){
-    document.getElementById('line-banner').classList.add('show');
+    var banner = document.getElementById('line-banner');
+    banner.classList.add('show');
+    setTimeout(function(){
+      banner.style.opacity = '0';
+      setTimeout(function(){ banner.style.display = 'none'; }, 800);
+    }, 300000);
   }
 })();
 
