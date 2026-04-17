@@ -514,6 +514,25 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .version-btn{position:fixed;bottom:32px;right:36px;z-index:998;background:rgba(255,255,255,.12);color:var(--gold);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;border:1.5px solid rgba(201,168,76,.4);border-radius:3px;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;backdrop-filter:blur(6px)}
 .version-btn:hover{background:var(--gold);color:var(--ink)}
 
+/* ── ENGAGE (counter + reactions) ───────────────────────── */
+.engage-wrap{max-width:1060px;margin:0 auto 48px;padding:40px 0;border-top:1px solid rgba(255,255,255,.07);text-align:center}
+.vc-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px}
+.vc-icon{font-size:15px;color:rgba(255,255,255,.3)}
+.vc-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.vc-count{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:#c9a84c;min-width:28px;display:inline-block}
+.reaction-title{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:22px}
+.reaction-row{display:flex;justify-content:center;gap:14px;flex-wrap:nowrap;max-width:480px;margin:0 auto}
+.r-card{background:rgba(255,255,255,.03);border:1.5px solid rgba(201,168,76,.3);border-radius:14px;padding:16px 0;cursor:pointer;transition:border-color .25s,background .25s,transform .2s;display:flex;flex-direction:column;align-items:center;gap:6px;flex:1 1 0;font-family:inherit}
+.r-card:hover{border-color:#c9a84c;background:rgba(201,168,76,.07);transform:translateY(-3px)}
+.r-card.picked{border-color:#FFD700;background:rgba(255,215,0,.07);cursor:default}
+.r-icon{font-size:26px;line-height:1}
+.r-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.5);transition:color .25s}
+.r-card.picked .r-label{color:#FFD700}
+.r-count{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:#c9a84c;transition:color .25s;min-height:30px}
+.r-card.picked .r-count{color:#FFD700}
+.r-card.bump .r-count{animation:rBump .35s ease}
+@keyframes rBump{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
+@media(max-width:600px){.reaction-row{gap:10px;max-width:340px}.r-card{padding:14px 0}.r-icon{font-size:20px}.r-count{font-size:18px}.r-label{font-size:9px}}
 /* ── vCARD BUTTON + PREVIEW ───────────── */
 .vcard-wrap{position:relative;display:inline-block;margin-top:18px}
 .vcard-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(196,18,48,.08);border:1.5px solid rgba(201,168,76,.4);border-radius:24px;padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c9a84c;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
@@ -924,6 +943,20 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <div class="f-patent"><div class="pt">"Polymer compositions for controlled release of metabolite substances"</div><div class="pn">App. No. 2103002600 (TH) · October 2021</div></div>
     </div>
   </div>
+  <!-- ── COUNTER + REACTIONS ── -->
+  <div class="engage-wrap">
+    <div class="vc-row">
+      <span class="vc-icon">👁</span>
+      <span class="vc-label">Page Views</span>
+      <span class="vc-count" id="vc-num">—</span>
+    </div>
+    <div class="reaction-title">How do you feel about this technology?</div>
+    <div class="reaction-row">
+      <button class="r-card" data-key="inspiring"><span class="r-icon">❤️</span><span class="r-label">Inspiring</span><span class="r-count" id="rc-inspiring">—</span></button>
+      <button class="r-card" data-key="welldone"><span class="r-icon">👏</span><span class="r-label">Well done</span><span class="r-count" id="rc-welldone">—</span></button>
+      <button class="r-card" data-key="innovative"><span class="r-icon">🔬</span><span class="r-label">Innovative</span><span class="r-count" id="rc-innovative">—</span></button>
+    </div>
+  </div>
   <div class="footer-bottom">
     <div class="footer-slogan">"<em>ACTIV-In Dot Technology</em> — advancing the future of personalized topical patch fabrication."</div>
     <div class="footer-copy">第九届中国（上海）国际发明创新展 · 2026</div>
@@ -1285,6 +1318,54 @@ document.querySelectorAll('.layer-stack').forEach(s => layIO.observe(s));
       setTimeout(function(){ banner.style.display = 'none'; }, 800);
     }, 5000);
   }
+})();
+
+/* ── PAGE COUNTER + REACTIONS ─────────────────────────── */
+(function(){
+  var BASE = 'https://api.counterapi.dev/v1/fanfloyd1977-sh/';
+  var STORE = 'sh_reaction_v1';
+  var PV_KEY = 'sh26-pv';
+  var REACT_KEYS = { inspiring:'sh26-ins', welldone:'sh26-wd', innovative:'sh26-inv' };
+  function setReactCount(key, val){
+    var el = document.getElementById('rc-' + key);
+    if(el) el.textContent = val;
+  }
+  function setPicked(key){
+    document.querySelectorAll('.r-card').forEach(function(c){ c.classList.remove('picked'); });
+    if(key) document.querySelectorAll('[data-key="' + key + '"]').forEach(function(c){ c.classList.add('picked'); });
+  }
+  fetch(BASE + PV_KEY + '/up')
+    .then(function(r){ return r.json(); })
+    .then(function(d){ var el=document.getElementById('vc-num'); if(el) el.textContent=(d.count||1).toLocaleString(); })
+    .catch(function(){ var el=document.getElementById('vc-num'); if(el) el.textContent='1'; });
+  Object.keys(REACT_KEYS).forEach(function(label){
+    fetch(BASE + REACT_KEYS[label] + '/')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ setReactCount(label, d.count||0); })
+      .catch(function(){ setReactCount(label, 0); });
+  });
+  var picked = localStorage.getItem(STORE);
+  if(picked) setPicked(picked);
+  document.querySelectorAll('.r-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      var key = this.dataset.key;
+      var prev = localStorage.getItem(STORE);
+      if(prev === key) return;
+      setPicked(key);
+      localStorage.setItem(STORE, key);
+      fetch(BASE + REACT_KEYS[key] + '/up')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          setReactCount(key, d.count);
+          document.querySelectorAll('[data-key="'+key+'"]').forEach(function(c){ c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); });
+        });
+      if(prev && REACT_KEYS[prev]){
+        fetch(BASE + REACT_KEYS[prev] + '/down')
+          .then(function(r){ return r.json(); })
+          .then(function(d){ setReactCount(prev, Math.max(0, d.count)); });
+      }
+    });
+  });
 })();
 
 /* ── vCARD DOWNLOAD ─────────────────────────── */
