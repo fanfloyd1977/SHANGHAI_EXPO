@@ -42,7 +42,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 /* ── HERO ────────────────────────────────── */
 #hero{
-  position:relative;min-height:100vh;
+  position:relative;height:100vh;min-height:600px;
   background:var(--ink);
   display:grid;
   grid-template-columns:1fr 420px;
@@ -94,13 +94,13 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .hero-left{
   position:relative;z-index:4;
   display:flex;flex-direction:column;justify-content:center;
-  padding:100px 60px 60px 72px;
+  padding:clamp(80px,8vh,100px) 60px clamp(24px,3vh,52px) 72px;
 }
-@media(max-width:900px){.hero-left{padding:100px 32px 60px}}
+@media(max-width:900px){.hero-left{padding:clamp(70px,8vh,100px) 32px clamp(20px,3vh,48px)}}
 
 .event-top{
   display:flex;flex-direction:column;gap:6px;
-  margin-bottom:48px;
+  margin-bottom:clamp(18px,3.2vh,48px);
   opacity:0;animation:fadeUp .9s ease forwards .2s;
 }
 .event-year{
@@ -119,16 +119,16 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   font-family:'Montserrat',sans-serif;font-size:clamp(10px,1.1vw,13px);
   font-weight:600;letter-spacing:.12em;text-transform:uppercase;
   color:rgba(255,255,255,.35);line-height:1.6;
-  max-width:480px;margin-bottom:32px;
+  max-width:480px;margin-bottom:clamp(12px,2.2vh,32px);
   opacity:0;animation:fadeUp .9s ease forwards .45s;
 }
 
 /* Brand */
 .hero-brand{
   font-family:'Montserrat',sans-serif;
-  font-size:clamp(44px,6vw,72px);
+  font-size:clamp(36px,5.5vw,72px);
   font-weight:900;letter-spacing:.03em;line-height:1.05;
-  color:var(--white);margin-bottom:8px;
+  color:var(--white);margin-bottom:6px;
   opacity:0;animation:fadeUp .9s ease forwards .65s;
 }
 .hero-brand .red{color:var(--red)}
@@ -137,7 +137,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 /* Animated underline */
 .brand-line{
-  width:200px;height:3px;margin-bottom:28px;
+  width:200px;height:3px;margin-bottom:clamp(10px,2vh,28px);
   background:linear-gradient(90deg,var(--red),var(--gold),var(--red));
   background-size:200% 100%;
   animation:shimmer 3s linear infinite, growLine .8s ease forwards .9s;
@@ -149,7 +149,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .hero-tagline{
   font-size:clamp(13px,1.4vw,15px);font-weight:300;
   color:rgba(255,255,255,.55);line-height:1.8;
-  max-width:440px;margin-bottom:44px;
+  max-width:440px;margin-bottom:clamp(16px,3vh,44px);
   opacity:0;animation:fadeUp .9s ease forwards .85s;
 }
 .hero-tagline em{color:var(--gold2);font-style:normal;font-weight:400}
@@ -174,7 +174,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 /* Date strip */
 .hero-date{
-  margin-top:32px;padding-top:24px;
+  margin-top:clamp(12px,2vh,32px);padding-top:clamp(10px,1.5vh,24px);
   border-top:1px solid rgba(255,255,255,.08);
   font-size:12px;color:rgba(255,255,255,.35);letter-spacing:.06em;
   opacity:0;animation:fadeUp .9s ease forwards 1.3s;
@@ -186,7 +186,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
   position:relative;z-index:4;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
-  padding:0px 32px 60px;
+  padding:38px 32px 22px;
   background:rgba(255,255,255,.024);
 }
 @media(max-width:900px){.hero-right{display:none}}
@@ -200,7 +200,7 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 .cn-char{
   font-family:'Noto Serif SC',serif;
-  font-size:clamp(72px,8.5vw,118px);
+  font-size:clamp(62px,7.5vw,104px);
   font-weight:900;
   line-height:1.0;
   letter-spacing:-.02em;
@@ -514,6 +514,35 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 .version-btn{position:fixed;bottom:32px;right:36px;z-index:998;background:rgba(255,255,255,.12);color:var(--gold);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;border:1.5px solid rgba(201,168,76,.4);border-radius:3px;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;backdrop-filter:blur(6px)}
 .version-btn:hover{background:var(--gold);color:var(--ink)}
 
+/* ── vCARD BUTTON + PREVIEW ───────────── */
+.vcard-wrap{position:relative;display:inline-block;margin-top:18px}
+.vcard-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(196,18,48,.08);border:1.5px solid rgba(201,168,76,.4);border-radius:24px;padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c9a84c;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.vcard-btn:hover{background:rgba(201,168,76,.18);border-color:#c9a84c;transform:translateY(-2px)}
+.vcard-preview{position:absolute;bottom:calc(100% + 14px);left:0;min-width:260px;background:rgba(10,20,50,.97);border:1px solid rgba(201,168,76,.4);border-radius:12px;padding:18px 20px 16px;box-shadow:0 8px 40px rgba(0,0,0,.6),0 0 0 1px rgba(201,168,76,.08);opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease;z-index:20}
+.vcard-wrap:hover .vcard-preview,.vcard-preview.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.vcard-preview::after{content:'';position:absolute;bottom:-7px;left:22px;width:12px;height:12px;background:rgba(10,20,50,.97);border-right:1px solid rgba(201,168,76,.4);border-bottom:1px solid rgba(201,168,76,.4);transform:rotate(45deg)}
+.vcp-hero{margin:-18px -20px 16px;padding:16px 20px 14px;background:#070e1c;background-image:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(13,33,69,.9) 0%,transparent 70%),radial-gradient(ellipse 50% 80% at 85% 30%,rgba(196,18,48,.12) 0%,transparent 60%);border-radius:11px 11px 0 0;position:relative;overflow:hidden}
+.vcp-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,168,76,.7) 1.5px,transparent 1.5px),radial-gradient(circle,rgba(196,18,48,.5) 1px,transparent 1px),radial-gradient(circle,rgba(201,168,76,.3) 1px,transparent 1px);background-size:40px 40px,28px 28px,56px 56px;background-position:5px 8px,18px 22px,32px 5px;animation:vcpDrift 8s linear infinite;opacity:.6;pointer-events:none}
+@keyframes vcpDrift{0%{background-position:5px 8px,18px 22px,32px 5px}100%{background-position:45px 48px,46px 50px,88px 61px}}
+.vcp-brand{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:900;color:#fff;letter-spacing:.04em;line-height:1;position:relative;z-index:1}
+.vcp-brand .vb-red{color:#c41230}.vcp-brand .vb-gold{color:#c9a84c}
+.vcp-shimmer{width:80px;height:2px;margin:7px 0 6px;background:linear-gradient(90deg,#c41230,#c9a84c,#c41230);background-size:200% 100%;animation:shimmer 3s linear infinite;position:relative;z-index:1}
+.vcp-event-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:800;letter-spacing:.22em;color:#c9a84c;text-transform:uppercase;text-shadow:0 0 10px rgba(201,168,76,.5);position:relative;z-index:1}
+.vcp-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c41230,#c9a84c);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:900;color:#fff;letter-spacing:0;flex-shrink:0}
+.vcp-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(201,168,76,.15)}
+.vcp-name{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#fff;line-height:1.2}
+.vcp-title{font-size:10px;color:#c9a84c;letter-spacing:.06em;margin-top:3px}
+.vcp-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.4}
+.vcp-row:last-of-type{margin-bottom:0}
+.vcp-row-icon{font-size:12px;flex-shrink:0;margin-top:1px}
+.vcp-note{margin-top:12px;padding-top:10px;border-top:1px solid rgba(201,168,76,.12);font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;line-height:1.5}
+@media(max-width:768px){.vcard-preview{left:auto;right:0}.vcard-preview::after{left:auto;right:22px}}
+/* ── LINE BROWSER BANNER ─────────────── */
+#line-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(196,18,48,.97);padding:14px 20px;align-items:center;justify-content:space-between;gap:12px;font-family:'Montserrat',sans-serif}
+#line-banner.show{display:flex}
+#line-banner p{font-size:12px;font-weight:600;color:#fff;line-height:1.5;margin:0}
+#line-banner p span{color:#FFD700}
+#line-banner button{background:#fff;color:#c41230;border:none;border-radius:20px;padding:7px 16px;font-size:11px;font-weight:800;letter-spacing:.06em;cursor:pointer;white-space:nowrap;flex-shrink:0}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 /* ── MOBILE SPLASH ── */
@@ -540,6 +569,11 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
 
 <!-- NAVBAR -->
 <a class="version-btn" href="index_light.html">☀ Light Version</a>
+
+<div id="line-banner">
+  <p>⚠️ You're using <span>Line browser</span>. Tap below to open in Safari for full functionality.</p>
+  <button onclick="window.open(location.href,'_blank')">Open in Safari</button>
+</div>
 
 <nav id="navbar">
   <span class="nav-brand">ACTIV-In · Shanghai 2026</span>
@@ -862,6 +896,26 @@ body{font-family:'Lato',sans-serif;background:var(--white);color:#222;overflow-x
       <div class="f-contact"><strong>Corresponding Author</strong>Lapporn Vayachuta</div>
       <div class="f-contact"><strong>Email</strong>Lapporn@nanotec.or.th</div>
       <div class="f-contact"><strong>Event</strong>9th China (Shanghai) International Invention Innovation Exhibition<br>June 10–14, 2026 · Shanghai World Expo Exhibition and Convention Center</div>
+      <div class="vcard-wrap">
+        <a class="vcard-btn" id="vcard-dl" href="#">💾 Save Contact</a>
+        <div class="vcard-preview">
+          <div class="vcp-hero">
+            <div class="vcp-brand"><span class="vb-red">ACTIV</span><span style="color:rgba(255,255,255,.3)">-In</span> <span class="vb-gold">Dot</span> Tech.</div>
+            <div class="vcp-shimmer"></div>
+            <div class="vcp-event-label">Shanghai · 2026</div>
+          </div>
+          <div class="vcp-header">
+            <div class="vcp-avatar">LV</div>
+            <div>
+              <div class="vcp-name">Lapporn Vayachuta</div>
+              <div class="vcp-title">Senior Researcher · NANOTEC <span style="white-space:nowrap">· NSTDA</span></div>
+            </div>
+          </div>
+          <div class="vcp-row"><span class="vcp-row-icon">✉️</span><span>Lapporn@nanotec.or.th</span></div>
+          <div class="vcp-row"><span class="vcp-row-icon">🏢</span><span>National Nanotechnology Center<br>NSTDA, Pathum Thani, Thailand</span></div>
+          <div class="vcp-note">ACTIV-In Dot Technology · Shanghai 2026 · June 10–14, 2026</div>
+        </div>
+      </div>
     </div>
     <div class="reveal d4">
       <div class="f-col-title">Patents Filed</div>
@@ -1219,6 +1273,47 @@ document.querySelectorAll('.layer-stack').forEach(s => layIO.observe(s));
     requestAnimationFrame(animate);
   }
   animate();
+})();
+
+/* ── LINE BROWSER DETECTION ─────────────────── */
+(function(){
+  if(/Line\//i.test(navigator.userAgent)){
+    document.getElementById('line-banner').classList.add('show');
+  }
+})();
+
+/* ── vCARD DOWNLOAD ─────────────────────────── */
+(function(){
+  var vc = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Lapporn Vayachuta',
+    'N:Vayachuta;Lapporn;;;',
+    'TITLE:Senior Researcher',
+    'ORG:National Nanotechnology Center (NANOTEC);NSTDA',
+    'EMAIL;TYPE=WORK:Lapporn@nanotec.or.th',
+    'ADR;TYPE=WORK:;;NSTDA Khlong Luang;Pathum Thani;;12120;Thailand',
+    'NOTE:ACTIV-In Dot Technology - 9th China (Shanghai) International Invention Innovation Exhibition - June 10-14 2026 - Shanghai World Expo Exhibition and Convention Center',
+    'END:VCARD'
+  ].join('\r\n');
+  var btn = document.getElementById('vcard-dl');
+  var preview = document.querySelector('.vcard-preview');
+  function saveVCard(e) {
+    e.preventDefault();
+    var blob = new Blob([vc], {type: 'text/x-vcard'});
+    var url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+  if(btn){
+    btn.addEventListener('click', saveVCard);
+    btn.addEventListener('touchend', function(e){
+      if(preview){ preview.classList.add('show'); setTimeout(function(){ preview.classList.remove('show'); }, 5000); }
+      saveVCard(e);
+    });
+    document.addEventListener('touchend', function(e){
+      if(preview && !e.target.closest('.vcard-wrap')) preview.classList.remove('show');
+    });
+  }
 })();
 </script>
 </body>

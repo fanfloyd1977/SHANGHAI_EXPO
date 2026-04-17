@@ -357,9 +357,38 @@ body{font-family:'Lato',sans-serif;background:var(--fog);color:var(--text);overf
 .footer-slogan em{color:rgba(154,100,114,.8);font-style:normal}
 .footer-copy{font-size:11px;color:rgba(232,226,217,.15)}
 
+/* ── vCARD BUTTON + PREVIEW ───────────── */
+.vcard-wrap{position:relative;display:inline-block;margin-top:18px}
+.vcard-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(196,18,48,.08);border:1.5px solid rgba(201,168,76,.4);border-radius:24px;padding:8px 18px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c9a84c;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.vcard-btn:hover{background:rgba(201,168,76,.18);border-color:#c9a84c;transform:translateY(-2px)}
+.vcard-preview{position:absolute;bottom:calc(100% + 14px);left:0;min-width:260px;background:rgba(10,20,50,.97);border:1px solid rgba(201,168,76,.4);border-radius:12px;padding:18px 20px 16px;box-shadow:0 8px 40px rgba(0,0,0,.6),0 0 0 1px rgba(201,168,76,.08);opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .22s ease,transform .22s ease;z-index:20}
+.vcard-wrap:hover .vcard-preview,.vcard-preview.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.vcard-preview::after{content:'';position:absolute;bottom:-7px;left:22px;width:12px;height:12px;background:rgba(10,20,50,.97);border-right:1px solid rgba(201,168,76,.4);border-bottom:1px solid rgba(201,168,76,.4);transform:rotate(45deg)}
+.vcp-hero{margin:-18px -20px 16px;padding:16px 20px 14px;background:#070e1c;background-image:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(13,33,69,.9) 0%,transparent 70%),radial-gradient(ellipse 50% 80% at 85% 30%,rgba(196,18,48,.12) 0%,transparent 60%);border-radius:11px 11px 0 0;position:relative;overflow:hidden}
+.vcp-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(201,168,76,.7) 1.5px,transparent 1.5px),radial-gradient(circle,rgba(196,18,48,.5) 1px,transparent 1px),radial-gradient(circle,rgba(201,168,76,.3) 1px,transparent 1px);background-size:40px 40px,28px 28px,56px 56px;background-position:5px 8px,18px 22px,32px 5px;animation:vcpDrift 8s linear infinite;opacity:.6;pointer-events:none}
+@keyframes vcpDrift{0%{background-position:5px 8px,18px 22px,32px 5px}100%{background-position:45px 48px,46px 50px,88px 61px}}
+.vcp-brand{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:900;color:#fff;letter-spacing:.04em;line-height:1;position:relative;z-index:1}
+.vcp-brand .vb-red{color:#c41230}.vcp-brand .vb-gold{color:#c9a84c}
+.vcp-shimmer{width:80px;height:2px;margin:7px 0 6px;background:linear-gradient(90deg,#c41230,#c9a84c,#c41230);background-size:200% 100%;animation:shimmer 3s linear infinite;position:relative;z-index:1}
+.vcp-event-label{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:800;letter-spacing:.22em;color:#c9a84c;text-transform:uppercase;text-shadow:0 0 10px rgba(201,168,76,.5);position:relative;z-index:1}
+.vcp-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c41230,#c9a84c);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:15px;font-weight:900;color:#fff;letter-spacing:0;flex-shrink:0}
+.vcp-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(201,168,76,.15)}
+.vcp-name{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#fff;line-height:1.2}
+.vcp-title{font-size:10px;color:#c9a84c;letter-spacing:.06em;margin-top:3px}
+.vcp-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:8px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.4}
+.vcp-row:last-of-type{margin-bottom:0}
+.vcp-row-icon{font-size:12px;flex-shrink:0;margin-top:1px}
+.vcp-note{margin-top:12px;padding-top:10px;border-top:1px solid rgba(201,168,76,.12);font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.06em;line-height:1.5}
+@media(max-width:768px){.vcard-preview{left:auto;right:0}.vcard-preview::after{left:auto;right:22px}}
+/* ── LINE BROWSER BANNER ─────────────── */
+#line-banner{display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(196,18,48,.97);padding:14px 20px;align-items:center;justify-content:space-between;gap:12px;font-family:'Montserrat',sans-serif}
+#line-banner.show{display:flex}
+#line-banner p{font-size:12px;font-weight:600;color:#fff;line-height:1.5;margin:0}
+#line-banner p span{color:#FFD700}
+#line-banner button{background:#fff;color:#c41230;border:none;border-radius:20px;padding:7px 16px;font-size:11px;font-weight:800;letter-spacing:.06em;cursor:pointer;white-space:nowrap;flex-shrink:0}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-.version-btn{position:fixed;bottom:32px;right:36px;z-index:998;background:rgba(42,50,64,.07);color:var(--ink);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;border:1.5px solid rgba(42,50,64,.25);border-radius:3px;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;backdrop-filter:blur(6px)}
+.version-btn{position:fixed;bottom:13px;right:36px;z-index:998;background:rgba(42,50,64,.07);color:var(--ink);font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;border:1.5px solid rgba(42,50,64,.25);border-radius:3px;text-decoration:none;cursor:pointer;transition:background .3s,color .3s;backdrop-filter:blur(6px)}
 .version-btn:hover{background:var(--ink);color:var(--fog)}
 /* ── MOBILE SPLASH ── */
 #mobile-splash{position:fixed;inset:0;z-index:9999;background:rgba(232,226,217,.98);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:1;transition:opacity 1s ease}
@@ -384,6 +413,11 @@ body{font-family:'Lato',sans-serif;background:var(--fog);color:var(--text);overf
 <script>(function(){if(window.innerWidth<=900){var s=document.getElementById('mobile-splash');s.style.display='flex';setTimeout(function(){s.classList.add('fade-out');setTimeout(function(){s.style.display='none'},1000)},3000)}})();</script>
 
 <a class="version-btn" href="index_starry.html">✦ Starry Version</a>
+
+<div id="line-banner">
+  <p>⚠️ You're using <span>Line browser</span>. Tap below to open in Safari for full functionality.</p>
+  <button onclick="window.open(location.href,'_blank')">Open in Safari</button>
+</div>
 
 <nav id="navbar">
   <span class="nav-brand">ACTIV-In · Shanghai 2026</span>
@@ -623,7 +657,7 @@ body{font-family:'Lato',sans-serif;background:var(--fog);color:var(--text);overf
 <section id="footer-section">
   <div class="footer-grid">
     <div class="reveal"><div class="footer-brand-name">ACTIV-In Dot Tech.</div><div class="footer-brand-sub">NANOTEC · NSTDA · Thailand</div><p class="footer-desc">National Nanotechnology Center, National Science and Technology Development Agency, Khlong Luang, Pathum Thani 12120, Thailand</p></div>
-    <div class="reveal d2"><div class="f-col-title">Contact</div><div class="f-contact"><strong>Corresponding Author</strong>Lapporn Vayachuta</div><div class="f-contact"><strong>Email</strong>Lapporn@nanotec.or.th</div><div class="f-contact"><strong>Event</strong>9th China (Shanghai) International Invention Innovation Exhibition<br>June 10–14, 2026 · Shanghai World Expo Exhibition and Convention Center</div></div>
+    <div class="reveal d2"><div class="f-col-title">Contact</div><div class="f-contact"><strong>Corresponding Author</strong>Lapporn Vayachuta</div><div class="f-contact"><strong>Email</strong>Lapporn@nanotec.or.th</div><div class="f-contact"><strong>Event</strong>9th China (Shanghai) International Invention Innovation Exhibition<br>June 10–14, 2026 · Shanghai World Expo Exhibition and Convention Center</div><div class="vcard-wrap"><a class="vcard-btn" id="vcard-dl" href="#">💾 Save Contact</a><div class="vcard-preview"><div class="vcp-hero"><div class="vcp-brand"><span class="vb-red">ACTIV</span><span style="color:rgba(255,255,255,.3)">-In</span> <span class="vb-gold">Dot</span> Tech.</div><div class="vcp-shimmer"></div><div class="vcp-event-label">Shanghai · 2026</div></div><div class="vcp-header"><div class="vcp-avatar">LV</div><div><div class="vcp-name">Lapporn Vayachuta</div><div class="vcp-title">Senior Researcher · NANOTEC <span style="white-space:nowrap">· NSTDA</span></div></div></div><div class="vcp-row"><span class="vcp-row-icon">✉️</span><span>Lapporn@nanotec.or.th</span></div><div class="vcp-row"><span class="vcp-row-icon">🏢</span><span>National Nanotechnology Center<br>NSTDA, Pathum Thani, Thailand</span></div><div class="vcp-note">ACTIV-In Dot Technology · Shanghai 2026 · June 10–14, 2026</div></div></div></div>
     <div class="reveal d4"><div class="f-col-title">Patents Filed</div><div class="f-patent"><div class="pt">"Polymer compositions for entrapsulated oxyresveratrol substances…"</div><div class="pn">App. No. 2503001237 (TH) · April 2025</div></div><div class="f-patent"><div class="pt">"Carrier compositions for delivering substance into skin"</div><div class="pn">App. No. 2203002560 (TH) · September 2022</div></div><div class="f-patent"><div class="pt">"Polymer compositions for controlled release of metabolite substances"</div><div class="pn">App. No. 2103002600 (TH) · October 2021</div></div></div>
   </div>
   <div class="footer-bottom">
@@ -884,6 +918,47 @@ document.querySelectorAll('.ai-table').forEach(t=>logpIO.observe(t));
 /* ── PATCH LAYERS ── */
 const layIO=new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting){ e.target.querySelectorAll('.layer').forEach(l=>l.classList.add('on')); layIO.unobserve(e.target); } }); },{threshold:.2});
 document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
+
+/* ── LINE BROWSER DETECTION ─────────────────── */
+(function(){
+  if(/Line\//i.test(navigator.userAgent)){
+    document.getElementById('line-banner').classList.add('show');
+  }
+})();
+
+/* ── vCARD DOWNLOAD ─────────────────────────── */
+(function(){
+  var vc = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Lapporn Vayachuta',
+    'N:Vayachuta;Lapporn;;;',
+    'TITLE:Senior Researcher',
+    'ORG:National Nanotechnology Center (NANOTEC);NSTDA',
+    'EMAIL;TYPE=WORK:Lapporn@nanotec.or.th',
+    'ADR;TYPE=WORK:;;NSTDA Khlong Luang;Pathum Thani;;12120;Thailand',
+    'NOTE:ACTIV-In Dot Technology - 9th China (Shanghai) International Invention Innovation Exhibition - June 10-14 2026 - Shanghai World Expo Exhibition and Convention Center',
+    'END:VCARD'
+  ].join('\r\n');
+  var btn = document.getElementById('vcard-dl');
+  var preview = document.querySelector('.vcard-preview');
+  function saveVCard(e) {
+    e.preventDefault();
+    var blob = new Blob([vc], {type: 'text/x-vcard'});
+    var url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+  if(btn){
+    btn.addEventListener('click', saveVCard);
+    btn.addEventListener('touchend', function(e){
+      if(preview){ preview.classList.add('show'); setTimeout(function(){ preview.classList.remove('show'); }, 5000); }
+      saveVCard(e);
+    });
+    document.addEventListener('touchend', function(e){
+      if(preview && !e.target.closest('.vcard-wrap')) preview.classList.remove('show');
+    });
+  }
+})();
 </script>
 </body>
 </html>
