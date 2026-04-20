@@ -853,10 +853,8 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
 
 /* ── PAGE COUNTER + REACTIONS ─────────────────────────── */
 (function(){
-  var BASE = 'https://api.counterapi.dev/v1/fanfloyd1977-sh/';
+  var DB    = 'https://nac-counter-default-rtdb.asia-southeast1.firebasedatabase.app/shanghai';
   var STORE = 'sh_reaction_v1';
-  var PV_KEY = 'sh26-pv';
-  var REACT_KEYS = { inspiring:'sh26-ins', welldone:'sh26-wd', innovative:'sh26-inv' };
   function setReactCount(key, val){
     var el = document.getElementById('rc-' + key);
     if(el) el.textContent = val;
@@ -865,35 +863,44 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
     document.querySelectorAll('.r-card').forEach(function(c){ c.classList.remove('picked'); });
     if(key) document.querySelectorAll('[data-key="' + key + '"]').forEach(function(c){ c.classList.add('picked'); });
   }
-  fetch(BASE + PV_KEY + '/up')
-    .then(function(r){ return r.json(); })
-    .then(function(d){ var el=document.getElementById('vc-num'); if(el) el.textContent=(d.count||1).toLocaleString(); })
-    .catch(function(){ var el=document.getElementById('vc-num'); if(el) el.textContent='1'; });
-  Object.keys(REACT_KEYS).forEach(function(label){
-    fetch(BASE + REACT_KEYS[label] + '/')
+  function fbIncrement(path, delta){
+    return fetch(DB + path + '.json')
       .then(function(r){ return r.json(); })
-      .then(function(d){ setReactCount(label, d.count||0); })
-      .catch(function(){ setReactCount(label, 0); });
+      .then(function(current){
+        var newVal = Math.max(0, (typeof current === 'number' ? current : 0) + delta);
+        return fetch(DB + path + '.json', {
+          method : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body   : JSON.stringify(newVal)
+        }).then(function(r){ return r.json(); });
+      });
+  }
+  fbIncrement('/pageviews', 1)
+    .then(function(d){ var el=document.getElementById('vc-num'); if(el) el.textContent=(typeof d==='number'?d:1).toLocaleString(); })
+    .catch(function(){ var el=document.getElementById('vc-num'); if(el) el.textContent='—'; });
+  ['inspiring','welldone','innovative'].forEach(function(key){
+    fetch(DB + '/reactions/' + key + '.json')
+      .then(function(r){ return r.json(); })
+      .then(function(d){ setReactCount(key, d||0); })
+      .catch(function(){ setReactCount(key, 0); });
   });
   var picked = localStorage.getItem(STORE);
   if(picked) setPicked(picked);
   document.querySelectorAll('.r-card').forEach(function(card){
     card.addEventListener('click', function(){
-      var key = this.dataset.key;
+      var key  = this.dataset.key;
       var prev = localStorage.getItem(STORE);
       if(prev === key) return;
       setPicked(key);
       localStorage.setItem(STORE, key);
-      fetch(BASE + REACT_KEYS[key] + '/up')
-        .then(function(r){ return r.json(); })
+      fbIncrement('/reactions/' + key, 1)
         .then(function(d){
-          setReactCount(key, d.count);
+          setReactCount(key, typeof d==='number'?d:0);
           document.querySelectorAll('[data-key="'+key+'"]').forEach(function(c){ c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump'); });
         });
-      if(prev && REACT_KEYS[prev]){
-        fetch(BASE + REACT_KEYS[prev] + '/down')
-          .then(function(r){ return r.json(); })
-          .then(function(d){ setReactCount(prev, Math.max(0, d.count)); });
+      if(prev){
+        fbIncrement('/reactions/' + prev, -1)
+          .then(function(d){ setReactCount(prev, Math.max(0, typeof d==='number'?d:0)); });
       }
     });
   });
