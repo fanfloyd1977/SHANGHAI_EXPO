@@ -1315,11 +1315,8 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
 
 /* ── PAGE COUNTER + REACTIONS ─────────────────────────── */
 (function(){
-  var BASE = 'https://api.counterapi.dev/v1/fanfloyd1977-nac/';
+  var DB    = 'https://nac-counter-default-rtdb.asia-southeast1.firebasedatabase.app';
   var STORE = 'nac_reaction_v1';
-  /* live key names — fresh counters starting at 0 */
-  var PV_KEY = 'nac26-pv';
-  var REACT_KEYS = { inspiring:'nac26-ins', welldone:'nac26-wd', innovative:'nac26-inv' };
 
   /* --- helper: set count on all instances of a reaction key --- */
   function setReactCount(key, val){
@@ -1335,35 +1332,48 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
     }
   }
 
+  /* --- Firebase helper: read → add delta → write --- */
+  function fbIncrement(path, delta){
+    return fetch(DB + path + '.json')
+      .then(function(r){ return r.json(); })
+      .then(function(current){
+        var newVal = Math.max(0, (typeof current === 'number' ? current : 0) + delta);
+        return fetch(DB + path + '.json', {
+          method : 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body   : JSON.stringify(newVal)
+        }).then(function(r){ return r.json(); });
+      });
+  }
+
   /* --- Page view counter: increment on every load --- */
-  fetch(BASE + PV_KEY + '/up')
-    .then(function(r){ return r.json(); })
+  fbIncrement('/pageviews', 1)
     .then(function(d){
-      var n = (d.count || 1).toLocaleString();
+      var n = (typeof d === 'number' ? d : 1).toLocaleString();
       var el = document.getElementById('vc-num');
       if(el) el.textContent = n;
     })
     .catch(function(){
       var el = document.getElementById('vc-num');
-      if(el) el.textContent = '1';
+      if(el) el.textContent = '—';
     });
 
-  /* --- Load reaction counts (read-only, no increment) --- */
-  Object.keys(REACT_KEYS).forEach(function(label){
-    fetch(BASE + REACT_KEYS[label] + '/')
+  /* --- Load reaction counts (read-only) --- */
+  ['inspiring','welldone','innovative'].forEach(function(key){
+    fetch(DB + '/reactions/' + key + '.json')
       .then(function(r){ return r.json(); })
-      .then(function(d){ setReactCount(label, d.count || 0); })
-      .catch(function(){  setReactCount(label, 0); });
+      .then(function(d){ setReactCount(key, d || 0); })
+      .catch(function(){ setReactCount(key, 0); });
   });
 
   /* --- Restore previously picked reaction --- */
   var picked = localStorage.getItem(STORE);
   if(picked) setPicked(picked);
 
-  /* --- Handle reaction click (Option A: can change reaction) --- */
+  /* --- Handle reaction click --- */
   document.querySelectorAll('.r-card,.hr-btn').forEach(function(card){
     card.addEventListener('click', function(){
-      var key = this.dataset.key;
+      var key  = this.dataset.key;
       var prev = localStorage.getItem(STORE);
       if(prev === key) return; /* clicked same — do nothing */
 
@@ -1371,21 +1381,18 @@ document.querySelectorAll('.layer-stack').forEach(s=>layIO.observe(s));
       localStorage.setItem(STORE, key);
 
       /* Increment new choice */
-      fetch(BASE + REACT_KEYS[key] + '/up')
-        .then(function(r){ return r.json(); })
+      fbIncrement('/reactions/' + key, 1)
         .then(function(d){
-          setReactCount(key, d.count);
-          /* bump both instances */
+          setReactCount(key, typeof d === 'number' ? d : 0);
           document.querySelectorAll('[data-key="' + key + '"]').forEach(function(c){
             c.classList.remove('bump'); void c.offsetWidth; c.classList.add('bump');
           });
         });
 
       /* Decrement previous choice (if any) */
-      if(prev && REACT_KEYS[prev]){
-        fetch(BASE + REACT_KEYS[prev] + '/down')
-          .then(function(r){ return r.json(); })
-          .then(function(d){ setReactCount(prev, Math.max(0, d.count)); });
+      if(prev){
+        fbIncrement('/reactions/' + prev, -1)
+          .then(function(d){ setReactCount(prev, Math.max(0, typeof d === 'number' ? d : 0)); });
       }
     });
   });
